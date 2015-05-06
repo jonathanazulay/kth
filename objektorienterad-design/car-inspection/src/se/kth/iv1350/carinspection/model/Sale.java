@@ -3,7 +3,7 @@ package se.kth.iv1350.carinspection.model;
 import se.kth.iv1350.carinspection.dto.CreditCard;
 import se.kth.iv1350.carinspection.service.ExternalPaymentSystem;
 import se.kth.iv1350.carinspection.service.PaymentAuthorization;
-import se.kth.iv1350.carinspection.service.PaymentResult;
+import se.kth.iv1350.carinspection.dto.PaymentResult;
 
 public class Sale {
     private final Inspection inspection;

@@ -3,7 +3,7 @@ package se.kth.iv1350.carinspection.controller;
 import se.kth.iv1350.carinspection.model.Inspection;
 import se.kth.iv1350.carinspection.dto.CreditCard;
 import se.kth.iv1350.carinspection.dto.Document;
-import se.kth.iv1350.carinspection.service.PaymentResult;
+import se.kth.iv1350.carinspection.dto.PaymentResult;
 import se.kth.iv1350.carinspection.dto.InspectionStepDescription;
 import se.kth.iv1350.carinspection.dto.InspectionStepResult;
 import se.kth.iv1350.carinspection.model.Sale;

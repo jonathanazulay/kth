@@ -1,4 +1,4 @@
-package se.kth.iv1350.carinspection.service;
+package se.kth.iv1350.carinspection.dto;
 
 public class PaymentResult {
     private boolean success;
