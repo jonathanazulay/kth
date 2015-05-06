@@ -70,13 +70,13 @@ public class Sale {
         return generatePaymentResult(true, "");
     }
     
-    private PaymentResult generatePaymentResult (boolean success, String descr) {
+    private PaymentResult generatePaymentResult (boolean isSuccess, String descr) {
         if (this.currentCost < 0) {
             float change = this.currentCost * -1;
             this.currentCost = 0;
-            return new PaymentResult(success, descr, change, 0);
+            return new PaymentResult(isSuccess, descr, change, 0);
         } else {
-            return new PaymentResult(success, descr, 0, this.currentCost);
+            return new PaymentResult(isSuccess, descr, 0, this.currentCost);
         }
     }
     
