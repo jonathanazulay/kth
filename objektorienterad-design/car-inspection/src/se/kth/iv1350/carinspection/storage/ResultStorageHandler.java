@@ -6,9 +6,9 @@ import se.kth.iv1350.carinspection.dto.InspectionStepResult;
 import se.kth.iv1350.carinspection.model.InspectionStep;
 
 public class ResultStorageHandler {
-    private String licenseNumber;
+    private final String licenseNumber;
     private InspectionStep[] storedSteps;
-    private HashMap<String, InspectionStep[]> data = new HashMap<>();
+    private final HashMap<String, InspectionStep[]> data = new HashMap<>();
     
     /**
      * Creates a ResultStorageHandler
@@ -51,34 +51,32 @@ public class ResultStorageHandler {
     }
     
     private void insertDummyData () {
-        InspectionStep[] steps;
+        InspectionStep[] steps1 = new InspectionStep[3];
+        steps1[0] = new InspectionStep(new InspectionStepDescription("Kontrollera däck, tryck och slitage"));
+        steps1[0].setResult(new InspectionStepResult(false, "besiktning ej utförd"));
+        steps1[1] = new InspectionStep(new InspectionStepDescription("Kontrollera bromsar"));
+        steps1[1].setResult(new InspectionStepResult(false, "besiktning ej utförd"));
+        steps1[2] = new InspectionStep(new InspectionStepDescription("Kontrollera lysen, strålkastare och blinkers"));
+        steps1[2].setResult(new InspectionStepResult(false, "besiktning ej utförd"));
+        data.put("WPK123", steps1);
         
-        steps = new InspectionStep[3];
-        steps[0] = new InspectionStep(new InspectionStepDescription("Kontrollera däck, tryck och slitage"));
-        steps[0].setResult(new InspectionStepResult(false));
-        steps[1] = new InspectionStep(new InspectionStepDescription("Kontrollera bromsar"));
-        steps[1].setResult(new InspectionStepResult(true));
-        steps[2] = new InspectionStep(new InspectionStepDescription("Kontrollera lysen, strålkastare och blinkers"));
-        steps[2].setResult(new InspectionStepResult(false));
-        data.put("WPK123", steps);
+        InspectionStep[] steps2 = new InspectionStep[3];
+        steps2[0] = new InspectionStep(new InspectionStepDescription("Kontrollera däck, tryck och slitage"));
+        steps2[0].setResult(new InspectionStepResult(false, "besiktning ej utförd"));
+        steps2[1] = new InspectionStep(new InspectionStepDescription("Kontrollera bromsar"));
+        steps2[1].setResult(new InspectionStepResult(true, ""));
+        steps2[2] = new InspectionStep(new InspectionStepDescription("Kontrollera lysen, strålkastare och blinkers"));
+        steps2[2].setResult(new InspectionStepResult(true, ""));
+        data.put("OWA238", steps2);
         
-        steps = new InspectionStep[3];
-        steps[0] = new InspectionStep(new InspectionStepDescription("Kontrollera däck, tryck och slitage"));
-        steps[0].setResult(new InspectionStepResult(false));
-        steps[1] = new InspectionStep(new InspectionStepDescription("Kontrollera bromsar"));
-        steps[0].setResult(new InspectionStepResult(false));
-        steps[2] = new InspectionStep(new InspectionStepDescription("Kontrollera lysen, strålkastare och blinkers"));
-        steps[0].setResult(new InspectionStepResult(false));
-        data.put("OWA238", steps);
-        
-        steps = new InspectionStep[3];
-        steps[0] = new InspectionStep(new InspectionStepDescription("Kontrollera däck, tryck och slitage"));
-        steps[0].setResult(new InspectionStepResult(false));
-        steps[1] = new InspectionStep(new InspectionStepDescription("Kontrollera bromsar"));
-        steps[0].setResult(new InspectionStepResult(false));
-        steps[2] = new InspectionStep(new InspectionStepDescription("Kontrollera lysen, strålkastare och blinkers"));
-        steps[0].setResult(new InspectionStepResult(true));
-        data.put("DAK048", steps);
+        InspectionStep[] steps3 = new InspectionStep[3];
+        steps3[0] = new InspectionStep(new InspectionStepDescription("Kontrollera däck, tryck och slitage"));
+        steps3[0].setResult(new InspectionStepResult(true, ""));
+        steps3[1] = new InspectionStep(new InspectionStepDescription("Kontrollera bromsar"));
+        steps3[1].setResult(new InspectionStepResult(false, "besiktning ej utförd"));
+        steps3[2] = new InspectionStep(new InspectionStepDescription("Kontrollera lysen, strålkastare och blinkers"));
+        steps3[2].setResult(new InspectionStepResult(false, "besiktning ej utförd"));
+        data.put("DAK048", steps3);
     }
     
 }

@@ -78,6 +78,19 @@ public class Inspection {
     }
     
     private String generateInspectionSummary() {
-        return "Allt gick säkert bra, kör hårt";
+        StringBuilder sb = new StringBuilder("INSPEKTIONSRESULTAT\n");
+        for (int i = 0; i < this.inspectionSteps.length; i += 1) {
+            InspectionStep inspectionStep = this.inspectionSteps[i];
+            InspectionStepResult stepResult = inspectionStep.getResult();
+            InspectionStepDescription stepDescr = inspectionStep.getDescription();
+            
+            sb.append("\n" + stepDescr.getDescription() + ": ");
+            if (stepResult.getPassed() == true) {
+                sb.append("GODKÄND" + " (" + stepResult.getNote() + ")");
+            } else {
+                sb.append("EJ GODKÄND" + " (" + stepResult.getNote() + ")");
+            }
+        }
+        return sb.toString();
     }
 }
