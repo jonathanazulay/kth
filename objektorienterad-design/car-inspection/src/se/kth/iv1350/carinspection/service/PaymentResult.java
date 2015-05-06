@@ -21,19 +21,6 @@ public class PaymentResult {
         this.newTotal = newTotal;
     }
     
-    /**
-     * Creates a payment result
-     * @param success
-     * @param description 
-     */
-    public PaymentResult (boolean success, String description) {
-        this(success, description, 0, 0);
-    }
-    
-    public PaymentResult (boolean success) {
-        this(success, "", 0, 0);
-    }
-    
     public boolean isSuccess () {
         return this.success;
     }
