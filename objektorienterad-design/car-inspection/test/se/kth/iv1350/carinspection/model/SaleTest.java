@@ -9,7 +9,7 @@ import se.kth.iv1350.carinspection.storage.CarCatalogHandler;
 public class SaleTest {
     
     private Inspection inspection;
-    private final float expectedPriceForLicenseNumber = 118;
+    private final float expectedPriceForLicenseNumber = 216;
     private String licenseNumberToTest = "OWA238";
     
     private void createInspection (String licenseNumber) {
