@@ -21,18 +21,34 @@ public class PaymentResult {
         this.newTotal = newTotal;
     }
     
+    /**
+     * Returns true if payment was succeeded
+     * @return success
+     */
     public boolean isSuccess () {
         return this.success;
     }
     
+    /**
+     * Returns description of payment, if applicable. Could be reason for failure
+     * @return 
+     */
     public String getDescription () {
         return this.description;
     }
     
+    /**
+     * Returns change
+     * @return 
+     */
     public float getChange () {
         return this.change;
     }
     
+    /**
+     * Returns updated total cost
+     * @return 
+     */
     public float getNewTotal () {
         return this.newTotal;
     }
