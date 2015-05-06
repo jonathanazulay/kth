@@ -7,7 +7,7 @@ import se.kth.iv1350.carinspection.storage.ResultStorageHandler;
 
 public class Inspection {
     private ResultStorageHandler storageHandler;
-    private InspectionStep[] inspectionSteps;
+    private InspectionStep[] inspectionSteps = new InspectionStep[0];
     private int currentStep = 0;
     
     /**
