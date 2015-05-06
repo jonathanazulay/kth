@@ -1,8 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package se.kth.iv1350.carinspection.controller;
 
 import se.kth.iv1350.carinspection.model.Inspection;
@@ -15,10 +10,6 @@ import se.kth.iv1350.carinspection.model.Sale;
 import se.kth.iv1350.carinspection.service.PrinterService;
 import se.kth.iv1350.carinspection.storage.CarCatalogHandler;
 
-/**
- *
- * @author jonathanazulay
- */
 public class Controller {
     private Inspection inspection;
     private Sale sale;
