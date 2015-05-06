@@ -56,13 +56,13 @@ public class Sale {
     }
     
     private PaymentResult pay (float amount) {
-        if (amount <= 0) {
-            return generatePaymentResult(false, "Amount payed has to be larger than 0");
-        }
-        
         if (!this.startedPay) {
             this.currentCost = this.calculateCost();
             this.startedPay = true;
+        }
+        
+        if (amount <= 0) {
+            return generatePaymentResult(false, "Amount payed has to be larger than 0");
         }
         
         this.currentCost -= amount;

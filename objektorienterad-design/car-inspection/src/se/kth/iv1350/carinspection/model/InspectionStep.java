@@ -4,7 +4,7 @@ import se.kth.iv1350.carinspection.dto.InspectionStepDescription;
 import se.kth.iv1350.carinspection.dto.InspectionStepResult;
 
 public class InspectionStep {
-    private InspectionStepDescription description;
+    private final InspectionStepDescription description;
     private InspectionStepResult result;
     
     /**

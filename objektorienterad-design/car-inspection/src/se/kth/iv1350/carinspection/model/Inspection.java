@@ -34,8 +34,10 @@ public class Inspection {
         } else {
             InspectionStep possibleStep = inspectionSteps[currentStep++];
             if (possibleStep.getResult().getPassed() == false) {
+                // This inspection has not passed inspection, return it
                 return possibleStep.getDescription();
             } else {
+                // This inspection has already been marked as passed, try with next one...
                 return this.getNextStep();
             }
         }
@@ -79,6 +81,8 @@ public class Inspection {
     
     private String generateInspectionSummary() {
         StringBuilder sb = new StringBuilder("INSPEKTIONSRESULTAT\n");
+        // Loop through each inspection step and generate a row for each
+        // with the description and whether it passed inspection or not (and why)
         for (int i = 0; i < this.inspectionSteps.length; i += 1) {
             InspectionStep inspectionStep = this.inspectionSteps[i];
             InspectionStepResult stepResult = inspectionStep.getResult();

@@ -73,8 +73,9 @@ public class Controller {
     /**
      * Saves all results and prints a document
      */
-    public void finishInspection () {
+    public Document finishInspection () {
         Document resultDoc = inspection.finishInspection();
         PrinterService.print(resultDoc);
+        return resultDoc;
     }
 }

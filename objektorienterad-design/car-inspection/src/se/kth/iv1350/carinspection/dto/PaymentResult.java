@@ -1,10 +1,10 @@
 package se.kth.iv1350.carinspection.dto;
 
 public class PaymentResult {
-    private boolean success;
-    private String description;
-    private float change;
-    private float newTotal;
+    private final boolean success;
+    private final String description;
+    private final float change;
+    private final float newTotal;
     
     /**
      * Creates a payment result including any possible change and new total

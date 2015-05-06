@@ -64,7 +64,7 @@ public class ResultStorageHandler {
         steps2[0] = new InspectionStep(new InspectionStepDescription("Kontrollera däck, tryck och slitage"));
         steps2[0].setResult(new InspectionStepResult(false, "besiktning ej utförd"));
         steps2[1] = new InspectionStep(new InspectionStepDescription("Kontrollera bromsar"));
-        steps2[1].setResult(new InspectionStepResult(true, "besiktning ej utförd"));
+        steps2[1].setResult(new InspectionStepResult(true, ""));
         steps2[2] = new InspectionStep(new InspectionStepDescription("Kontrollera lysen, strålkastare och blinkers"));
         steps2[2].setResult(new InspectionStepResult(false, ""));
         data.put("OWA238", steps2);
