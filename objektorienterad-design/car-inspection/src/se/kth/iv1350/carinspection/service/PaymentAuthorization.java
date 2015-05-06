@@ -11,17 +11,30 @@ package se.kth.iv1350.carinspection.service;
  */
 public class PaymentAuthorization {
     private final boolean success;
-    private final String description;
+    private final String reason;
     
-    public PaymentAuthorization(boolean success, String description) {
+    /**
+     * Creates an authorization for a credit card payment
+     * @param success if authorization was success
+     * @param reason possible reason for failure or success, if applicable
+     */
+    public PaymentAuthorization(boolean success, String reason) {
         this.success = success;
-        this.description = description;
+        this.reason = reason;
+    }
+
+    /**
+     * Getter for reason
+     * @return reason
+     */
+    public String getReason() {
+        return this.reason;
     }
     
-    public String getDescription() {
-        return this.description;
-    }
-    
+    /**
+     * Getter for success
+     * @return 
+     */
     public boolean isSuccess() {
         return this.success;
     }

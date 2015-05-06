@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package se.kth.iv1350.carinspection.model;
+package se.kth.iv1350.carinspection.service;
 
 /**
  *
@@ -15,6 +15,14 @@ public class PaymentResult {
     private float change;
     private float newTotal;
     
+    /**
+     * Creates a payment result including any possible change and new total
+     * 
+     * @param success if payment was successfull
+     * @param description could be reason for failure or other
+     * @param change change that should be returned to customer
+     * @param newTotal for customer to pay
+     */
     public PaymentResult (boolean success, String description, float change, float newTotal) {
         this.success = success;
         this.description = description;
@@ -22,6 +30,11 @@ public class PaymentResult {
         this.newTotal = newTotal;
     }
     
+    /**
+     * Creates a payment result
+     * @param success
+     * @param description 
+     */
     public PaymentResult (boolean success, String description) {
         this(success, description, 0, 0);
     }

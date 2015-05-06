@@ -3,30 +3,54 @@ package se.kth.iv1350.carinspection.model;
 import se.kth.iv1350.carinspection.dto.CreditCard;
 import se.kth.iv1350.carinspection.service.ExternalPaymentSystem;
 import se.kth.iv1350.carinspection.service.PaymentAuthorization;
+import se.kth.iv1350.carinspection.service.PaymentResult;
 
 public class Sale {
-    private Inspection inspection;
+    private final Inspection inspection;
     private boolean startedPay = false;
     private float currentCost;
     
-    public Sale (Inspection insp) {
-        this.inspection = insp;
+    /**
+     * Create a new sale for a specified inspection
+     * 
+     * @param inspection to pay for
+     */
+    public Sale (Inspection inspection) {
+        this.inspection = inspection;
     }
     
+    /**
+     * Calculates the price of inspection
+     * 
+     * @return price
+     */
     public float calculateCost () {
         return 20 + this.inspection.getInspectionsLeft() * 98;
     }
     
+    /**
+     * Decreses the total price of sale using a credit card
+     * 
+     * @param creditCard to use
+     * @param amount to pay (can be less than total price)
+     * @return object representing result of payment
+     */
     public PaymentResult payWithCreditCard (CreditCard creditCard, float amount) {
         PaymentAuthorization creditCardPayment = ExternalPaymentSystem.createTransaction(creditCard, amount);
         
         if (creditCardPayment.isSuccess()) {
             return this.pay(amount);
         } else {
-            return generatePaymentResult(false, creditCardPayment.getDescription());
+            return generatePaymentResult(false, creditCardPayment.getReason());
         }
     }
     
+    /**
+     * Decreses the total price of sale using cash payment
+     * 
+     * @param amount to pay (can be less than total price)
+     * @return object representing result of payment
+     */
     public PaymentResult payWithCash (float amount) {
         return this.pay(amount);
     }

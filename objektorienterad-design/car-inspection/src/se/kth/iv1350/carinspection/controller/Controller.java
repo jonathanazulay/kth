@@ -8,7 +8,7 @@ package se.kth.iv1350.carinspection.controller;
 import se.kth.iv1350.carinspection.model.Inspection;
 import se.kth.iv1350.carinspection.dto.CreditCard;
 import se.kth.iv1350.carinspection.dto.Document;
-import se.kth.iv1350.carinspection.model.PaymentResult;
+import se.kth.iv1350.carinspection.service.PaymentResult;
 import se.kth.iv1350.carinspection.dto.InspectionStepDescription;
 import se.kth.iv1350.carinspection.dto.InspectionStepResult;
 import se.kth.iv1350.carinspection.model.Sale;
@@ -28,9 +28,8 @@ public class Controller {
     }
     
     public float enterLicenseNumber (String licenseNumber) {
-        CarCatalogHandler catalog = new CarCatalogHandler();
         this.inspection.setStorageHandler(
-            catalog.getResultStorage(licenseNumber)
+            CarCatalogHandler.getResultStorage(licenseNumber)
         );
         
         this.sale = new Sale(this.inspection);

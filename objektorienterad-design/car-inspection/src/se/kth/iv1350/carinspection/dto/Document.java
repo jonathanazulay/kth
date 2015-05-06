@@ -10,12 +10,20 @@ package se.kth.iv1350.carinspection.dto;
  * @author jonathanazulay
  */
 public class Document {
-    private String content;
+    private final String content;
 
+    /**
+     * Creates a new document with specified content
+     * @param content contents of document
+     */
     public Document(String content) {
         this.content = content;
     }
     
+    /**
+     * Returns the content
+     * @return document content
+     */
     public String getContent() {
         return content;
     }
