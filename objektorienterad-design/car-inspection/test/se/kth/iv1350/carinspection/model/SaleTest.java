@@ -41,15 +41,16 @@ public class SaleTest {
         
         // Test updated total
         assertEquals(
-            result.getNewTotal(),
             this.expectedPriceForLicenseNumber - 30,
+            result.getNewTotal(),
             0
         );
         
         // Check that change = 0
+        
         assertEquals(
-            result.getChange(),
             0,
+            result.getChange(),
             0
         );
         
@@ -58,9 +59,10 @@ public class SaleTest {
 
         // Check that change is 100
         assertEquals(
-            resultAfterOverPay.getChange(),
             100,
-        0);
+            resultAfterOverPay.getChange(),
+            0
+        );
     }
 
     @Test
@@ -72,15 +74,15 @@ public class SaleTest {
         
         // Test updated total
         assertEquals(
-            result.getNewTotal(),
             this.expectedPriceForLicenseNumber - 30,
+            result.getNewTotal(),
             0
         );
         
         // Check that change = 0
         assertEquals(
-            result.getChange(),
             0,
+            result.getChange(),
             0
         );
         
@@ -89,8 +91,8 @@ public class SaleTest {
 
         // Check that change is 100
         assertEquals(
-            resultAfterOverPay.getChange(),
             100,
+            resultAfterOverPay.getChange(),
         0);
     }
 }
