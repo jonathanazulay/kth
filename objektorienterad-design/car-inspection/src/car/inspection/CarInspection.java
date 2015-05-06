@@ -5,6 +5,9 @@
  */
 package car.inspection;
 
+import se.kth.iv1350.carinspection.controller.Controller;
+import se.kth.iv1350.carinspection.view.View;
+
 /**
  *
  * @author jonathanazulay
@@ -15,7 +18,8 @@ public class CarInspection {
      * @param args the command line arguments
      */
     public static void main(String[] args) {
-        
+        Controller controller = new Controller();
+        View view = new View(controller);
     }
 
 }

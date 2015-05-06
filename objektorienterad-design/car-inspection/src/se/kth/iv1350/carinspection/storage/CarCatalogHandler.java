@@ -10,5 +10,7 @@ package se.kth.iv1350.carinspection.storage;
  * @author jonathanazulay
  */
 public class CarCatalogHandler {
-    
+    public ResultStorageHandler getResultStorage (String licenseNumber) {
+        return new ResultStorageHandler(licenseNumber);
+    }
 }

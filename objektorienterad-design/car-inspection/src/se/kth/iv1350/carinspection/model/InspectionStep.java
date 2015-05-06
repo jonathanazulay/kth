@@ -1,14 +1,25 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package se.kth.iv1350.carinspection.model;
 
-/**
- *
- * @author jonathanazulay
- */
+import se.kth.iv1350.carinspection.dto.InspectionStepDescription;
+import se.kth.iv1350.carinspection.dto.InspectionStepResult;
+
 public class InspectionStep {
+    private InspectionStepDescription description;
+    private InspectionStepResult result;
     
+    public InspectionStep(InspectionStepDescription descr) {
+        this.description = descr;
+    }
+    
+    public InspectionStepDescription getDescription() {
+        return this.description;
+    }
+    
+    public void setResult(InspectionStepResult result) {
+        this.result = result;
+    }
+    
+    public InspectionStepResult getResult() {
+        return this.result;
+    }
 }

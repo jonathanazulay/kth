@@ -10,9 +10,13 @@ package se.kth.iv1350.carinspection.dto;
  * @author jonathanazulay
  */
 public class InspectionStepDescription {
-    public String description;
+    private String description;
     
     public InspectionStepDescription(String description) {
         this.description = description;
+    }
+    
+    public String getDescription () {
+        return this.description;
     }
 }

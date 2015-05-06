@@ -16,7 +16,7 @@ public class CreditCard {
     public CreditCard (String cardNumber, int pin) {    
         this.cardNumber = cardNumber;
         this.pin = pin;
-    }
+}
     
     public String getCardNumber () {
         return this.cardNumber;

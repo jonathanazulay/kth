@@ -10,5 +10,13 @@ package se.kth.iv1350.carinspection.dto;
  * @author jonathanazulay
  */
 public class Document {
+    private String content;
+
+    public Document(String content) {
+        this.content = content;
+    }
     
+    public String getContent() {
+        return content;
+    }
 }

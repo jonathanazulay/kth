@@ -5,10 +5,14 @@
  */
 package se.kth.iv1350.carinspection.service;
 
+import se.kth.iv1350.carinspection.dto.CreditCard;
+
 /**
  *
  * @author jonathanazulay
  */
 public class ExternalPaymentSystem {
-    
+    public static PaymentAuthorization createTransaction(CreditCard creCard, float amount) {
+        return new PaymentAuthorization(true, "");
+    }
 }

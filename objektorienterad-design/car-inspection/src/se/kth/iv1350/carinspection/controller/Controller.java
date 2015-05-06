@@ -7,8 +7,13 @@ package se.kth.iv1350.carinspection.controller;
 
 import se.kth.iv1350.carinspection.model.Inspection;
 import se.kth.iv1350.carinspection.dto.CreditCard;
-import se.kth.iv1350.carinspection.service.PaymentResult;
+import se.kth.iv1350.carinspection.dto.Document;
+import se.kth.iv1350.carinspection.model.PaymentResult;
 import se.kth.iv1350.carinspection.dto.InspectionStepDescription;
+import se.kth.iv1350.carinspection.dto.InspectionStepResult;
+import se.kth.iv1350.carinspection.model.Sale;
+import se.kth.iv1350.carinspection.service.PrinterService;
+import se.kth.iv1350.carinspection.storage.CarCatalogHandler;
 
 /**
  *
@@ -16,36 +21,40 @@ import se.kth.iv1350.carinspection.dto.InspectionStepDescription;
  */
 public class Controller {
     private Inspection inspection;
-    
-    public Controller () {
+    private Sale sale;
         
-    }
-    
     public void startNewInspection () {
-        
+        this.inspection = new Inspection();
     }
     
     public float enterLicenseNumber (String licenseNumber) {
-        return 0;
-    }
-    
-    public PaymentResult payWithCash (float amount) {
-        return new PaymentResult(false, "");
+        CarCatalogHandler catalog = new CarCatalogHandler();
+        this.inspection.setStorageHandler(
+            catalog.getResultStorage(licenseNumber)
+        );
+        
+        this.sale = new Sale(this.inspection);
+        return this.sale.calculateCost();
     }
     
     public PaymentResult payWithCreditCard (CreditCard creditCard, float amount) {
-        return new PaymentResult(false, "");
+        return this.sale.payWithCreditCard(creditCard, amount);
     }
     
+    public PaymentResult payWithCash (float amount) {
+        return this.sale.payWithCash(amount);
+    }
+        
     public InspectionStepDescription performInspection () {
-        return new InspectionStepDescription("");
+        return inspection.getNextStep();
     }
     
     public void enterResult (boolean passed) {
-        
+        inspection.setLastStepResult(new InspectionStepResult(passed));
     }
     
     public void finishInspection () {
-        
+        Document resultDoc = inspection.finishInspection();
+        PrinterService.print(resultDoc);
     }
 }
