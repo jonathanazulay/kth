@@ -86,7 +86,7 @@ public class SaleTest {
             0
         );
         
-        // Do a second payment, 100 kr more than new total
+        // Do a second payment, 100 kr more than needed
         PaymentResult resultAfterOverPay = sale.payWithCash(result.getNewTotal() + 100);
 
         // Check that change is 100
