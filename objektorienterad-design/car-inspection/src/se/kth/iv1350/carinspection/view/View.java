@@ -6,6 +6,7 @@
 package se.kth.iv1350.carinspection.view;
 
 import se.kth.iv1350.carinspection.controller.Controller;
+import se.kth.iv1350.carinspection.dto.CreditCard;
 import se.kth.iv1350.carinspection.dto.InspectionStepDescription;
 
 /**
@@ -23,8 +24,8 @@ public class View {
         float cost = controller.enterLicenseNumber("WPK123");
         System.out.println("cost for inspection is " + cost + "\n");
         
-        System.out.println("3 controller.payWithCash");
-        controller.payWithCash(cost);
+        System.out.println("3 controller.payWithCreditCard");
+        controller.payWithCreditCard(new CreditCard("7839393839486199", 3897), cost);
         System.out.println("inspection was payed for \n");
         
         InspectionStepDescription instruction;
