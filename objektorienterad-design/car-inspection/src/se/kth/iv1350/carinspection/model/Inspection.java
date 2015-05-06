@@ -25,7 +25,7 @@ public class Inspection {
      * Returns the next step of the inspection that doesn't
      * have its result set to passed.
      *
-     * @return returns a description of the next step or
+     * @return description of the next step or
      * null if no more steps to perform
      */
     public InspectionStepDescription getNextStep() {
