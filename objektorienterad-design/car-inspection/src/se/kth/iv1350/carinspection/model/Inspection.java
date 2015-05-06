@@ -59,7 +59,6 @@ public class Inspection {
     public int getInspectionsLeft () {
         int inspectionsLeft = 0;
         for (InspectionStep inspectionStep : inspectionSteps) {
-            System.out.println(inspectionStep.getDescription().getDescription());
             if (inspectionStep.getResult().getPassed() == false) {
                 inspectionsLeft += 1;
             }
