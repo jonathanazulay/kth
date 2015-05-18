@@ -3,6 +3,7 @@ package se.kth.ict.nextgenpos.controller;
 import se.kth.ict.nextgenpos.model.Sale;
 import se.kth.ict.nextgenpos.model.Receipt;
 import se.kth.ict.nextgenpos.model.ProductCatalog;
+import se.kth.ict.nextgenpos.model.ProductNotFoundException;
 import se.kth.ict.nextgenpos.model.ProductSpecification;
 
 /**
@@ -39,8 +40,9 @@ public class Controller {
      * @param quantity       The quantity of items to be entered.
      * @return               Information about the entered item.
      * @throws IllegalStateException If this method is called before makeNewSale().
+     * @throws ProductNotFoundException If the product with supplied itemId was not found
      */
-    public ProductSpecification enterItem(int itemId, int quantity) {
+    public ProductSpecification enterItem(int itemId, int quantity) throws ProductNotFoundException {
 	if (sale == null) {
 	    throw new IllegalStateException("enterItem() called before makeNewSale()");
 	}

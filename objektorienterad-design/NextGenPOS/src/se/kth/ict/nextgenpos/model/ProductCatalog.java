@@ -26,9 +26,15 @@ public class ProductCatalog {
      * Search for an item in the product catalog.
      *
      * @param    itemId The item to look for
-     * @return          The specification for the found item or null if no item was found.
+     * @return          The specification for the found item.
+     * @throws ProductNotFoundException If the product with supplied itemId was not found
      */
-    public ProductSpecification findSpecification(int itemId) {
-	    return products.get(itemId);
+    public ProductSpecification findSpecification(int itemId) throws ProductNotFoundException {
+            ProductSpecification searchResult = products.get(itemId);
+	    if (searchResult == null) {
+                throw new ProductNotFoundException(itemId);
+            } else {
+                return searchResult;
+            }
     }
 }
