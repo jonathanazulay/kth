@@ -5,8 +5,6 @@
  */
 package se.kth.ict.nextgenpos.model;
 
-import java.util.List;
-
 /**
  * Implement to get notifications whenever a sale changes
  */
