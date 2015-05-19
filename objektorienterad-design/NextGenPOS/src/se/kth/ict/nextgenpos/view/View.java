@@ -33,6 +33,10 @@ public class View {
         */
 	enterItem(10);
     }
+    
+    private void displayError(Exception err) {
+        System.out.println("Oops, try again! " + err.getMessage());
+    }
 
     private void enterItem(int itemId) {
 	int quantity = 1;
@@ -42,7 +46,7 @@ public class View {
             System.out.println("Result for item " + itemId + ": " + itemSpec);
             System.out.println("");
         } catch (ProductNotFoundException productException) {
-            System.out.println("Failed to enter item! " + productException.getMessage());
+            this.displayError(productException);
         }   
     }
 }
