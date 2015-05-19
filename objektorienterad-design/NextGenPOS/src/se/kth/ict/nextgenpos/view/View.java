@@ -64,9 +64,6 @@ public class View implements SaleObserver {
 	int quantity = 1;
         try {
             ProductSpecification itemSpec = cont.enterItem(itemId, quantity);
-            System.out.println("");
-            System.out.println("Result for item " + itemId + ": " + itemSpec);
-            System.out.println("");
         } catch (ProductNotFoundException productException) {
             this.displayError(productException);
         }   
