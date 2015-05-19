@@ -3,7 +3,7 @@ package se.kth.ict.nextgenpos.model;
 /**
  * An instance of this class holds information about a single sale of a single product.
  */
-class SalesLineItem {
+public class SalesLineItem {
     private ProductSpecification spec;
     private int quantity;
 
@@ -26,6 +26,11 @@ class SalesLineItem {
      */
     int getCost() {
 	return spec.getPrice() * quantity;
+    }
+
+    @Override
+    public String toString() {
+        return this.spec.toString();
     }
     
 }

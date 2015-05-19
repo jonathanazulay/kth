@@ -5,6 +5,7 @@ import se.kth.ict.nextgenpos.model.Receipt;
 import se.kth.ict.nextgenpos.model.ProductCatalog;
 import se.kth.ict.nextgenpos.model.ProductNotFoundException;
 import se.kth.ict.nextgenpos.model.ProductSpecification;
+import se.kth.ict.nextgenpos.model.SaleObserver;
 
 /**
  * The controller of the application. This is the sole controller, all calls to the
@@ -19,6 +20,14 @@ public class Controller {
      */
     public Controller() {
 	catalog = ProductCatalog.getInstance();
+    }
+    
+    public void addSaleObserver(SaleObserver observer) {
+        this.sale.addObserver(observer);
+    }
+    
+    public void removeSaleObserver(SaleObserver observer) {
+        this.sale.removeObserver(observer);
     }
     
     /**
