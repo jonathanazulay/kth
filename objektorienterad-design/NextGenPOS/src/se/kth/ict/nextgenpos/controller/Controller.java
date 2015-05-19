@@ -18,7 +18,7 @@ public class Controller {
      * Instantiates a new <code>Controller</code>.
      */
     public Controller() {
-	catalog = new ProductCatalog();
+	catalog = ProductCatalog.getInstance();
     }
     
     /**
