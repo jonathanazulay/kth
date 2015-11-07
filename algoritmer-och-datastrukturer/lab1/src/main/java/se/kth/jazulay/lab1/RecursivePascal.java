@@ -9,11 +9,12 @@ public class RecursivePascal {
     
     public void printPascal (int n) {
         if (n < 0) { return; }
-        System.out.println("");
+        if (!this.reverse) { this.printPascal(n - 1); }
+        System.out.println(" ");
         for (int k = 0; k <= n; k += 1) {
             System.out.print(this.binom(n, k) + " ");
         }
-        this.printPascal(n - 1);
+        if (this.reverse) { this.printPascal(n - 1); }
     }
     
     public int binom (int n, int k) {
