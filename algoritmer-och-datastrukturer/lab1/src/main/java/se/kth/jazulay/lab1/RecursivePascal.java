@@ -11,6 +11,7 @@ public class RecursivePascal implements Pascal {
         this.rows = new ArrayList();
     }
     
+    @Override
     public void printPascal (int n) {
         if (n < 0) { return; }
         if (!this.reverse) { this.printPascal(n - 1); }
@@ -21,6 +22,7 @@ public class RecursivePascal implements Pascal {
         if (this.reverse) { this.printPascal(n - 1); }
     }
     
+    @Override
     public int binom (int n, int k) {
         if (n <= 0 || k >= n || k == 0) {
             return 1;
@@ -37,9 +39,7 @@ public class RecursivePascal implements Pascal {
     private Integer fetchCached (int n, int k) {
         try {
             return this.rows.get(n).get(k);
-        } catch (NullPointerException e) {
-            return null;
-        } catch (IndexOutOfBoundsException e) {
+        } catch (NullPointerException | IndexOutOfBoundsException e) {
             return null;
         }
     }
