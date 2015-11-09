@@ -13,20 +13,35 @@ import com.google.common.base.Stopwatch;
  */
 public class Lab1 {
     public static void main(String[] args) {
-        Stopwatch swCached = Stopwatch.createStarted();
-        Pascal pascalPrinter = new RecursivePascal(false);
-        pascalPrinter.printPascal(30);
-        swCached.stop();
+        int levels = 23;
         
-        Stopwatch swUncached = Stopwatch.createStarted();
-        Pascal unchached = new UncachedRecursivePascal(false);
-        unchached.printPascal(30);
-        swUncached.stop();
+        Stopwatch[] stopwatches = {
+            Stopwatch.createUnstarted(),
+            Stopwatch.createUnstarted(),
+            Stopwatch.createUnstarted(),
+            Stopwatch.createUnstarted()
+        };
+        
+        stopwatches[0].start();
+        (new IterativePascal(true)).printPascal(20);
+        stopwatches[0].stop();
+        
+        stopwatches[1].start();
+        (new IterativePascal(false)).printPascal(150);
+        stopwatches[1].stop();
+        
+        stopwatches[2].start();
+        (new UncachedRecursivePascal(true)).printPascal(levels);
+        stopwatches[2].stop();
+        
+        stopwatches[3].start();
+        (new UncachedRecursivePascal(false)).printPascal(levels);
+        stopwatches[3].stop();
         
         System.out.println("");
-        System.out.println("");
         
-        System.out.println(swCached);
-        System.out.println(swUncached);
+        for (Stopwatch sw : stopwatches) {
+            System.out.println(sw);
+        }
     }
 }
