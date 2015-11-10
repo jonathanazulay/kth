@@ -14,11 +14,11 @@ public class Lab1 {
         };
         
         stopwatches[0].start();
-        (new IterativePascal(true)).printPascal(20);
+        (new IterativePascal(true)).printPascal(levels);
         stopwatches[0].stop();
         
         stopwatches[1].start();
-        (new IterativePascal(false)).printPascal(150);
+        (new IterativePascal(false)).printPascal(levels);
         stopwatches[1].stop();
         
         stopwatches[2].start();
