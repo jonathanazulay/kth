@@ -13,7 +13,7 @@ public class RecursivePascal extends ErrorPascal {
     
     @Override
     public void printPascal (int n) {
-        
+        this.validatePrintInput(n);
         
         if (!this.reverse && n > 0) { this.printPascal(n - 1); }
         System.out.println(" ");
@@ -25,6 +25,8 @@ public class RecursivePascal extends ErrorPascal {
     
     @Override
     public int binom (int n, int k) {
+        this.validateBinomInput(n, k);
+        
         if (n == 0 || k == n || k == 0) {
             return 1;
         }
