@@ -2,7 +2,7 @@ package se.kth.jazulay.lab1;
 
 import java.util.ArrayList;
 
-public class RecursivePascal implements Pascal {
+public class RecursivePascal extends ErrorPascal {
     boolean reverse;
     ArrayList<ArrayList<Integer>> rows;
 
@@ -13,18 +13,19 @@ public class RecursivePascal implements Pascal {
     
     @Override
     public void printPascal (int n) {
-        if (n < 0) { return; }
-        if (!this.reverse) { this.printPascal(n - 1); }
+        
+        
+        if (!this.reverse && n > 0) { this.printPascal(n - 1); }
         System.out.println(" ");
         for (int k = 0; k <= n; k += 1) {
             System.out.print(this.binom(n, k) + " ");
         }
-        if (this.reverse) { this.printPascal(n - 1); }
+        if (this.reverse && n > 0) { this.printPascal(n - 1); }
     }
     
     @Override
     public int binom (int n, int k) {
-        if (n <= 0 || k >= n || k == 0) {
+        if (n == 0 || k == n || k == 0) {
             return 1;
         }
         
