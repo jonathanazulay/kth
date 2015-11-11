@@ -1,5 +1,7 @@
 package se.kth.jazulay.lab1;
 
+import java.math.BigInteger;
+
 public class IterativePascal extends ErrorPascal {
     boolean reverse;
 
@@ -28,13 +30,16 @@ public class IterativePascal extends ErrorPascal {
     @Override
     public int binom(int n, int k) {
         this.validateBinomInput(n, k);
-        
-        int binom = 1;
-        double i = 1;
-        while (i <= k) {
-            binom *= (n + 1 - i) / i;
-            i += 1;
+        return this.factorial(n).divide(this.factorial(k).multiply(this.factorial(n - k))).intValue();
+    }
+    
+    private BigInteger factorial (int fact) {
+        BigInteger n = new BigInteger(fact + "");
+        BigInteger factN = BigInteger.ONE;
+        while (n.intValue() > 0) {
+            factN = factN.multiply(n);
+            n = n.subtract(BigInteger.ONE);
         }
-        return binom;
+        return factN;
     }
 }
