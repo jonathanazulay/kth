@@ -1,16 +1,7 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package se.kth.jazulay.lab1;
 
 import com.google.common.base.Stopwatch;
 
-/**
- *
- * @author jonathanazulay
- */
 public class Driver {
     public static void main(String[] args) {
         Pascal[] pascals = {
