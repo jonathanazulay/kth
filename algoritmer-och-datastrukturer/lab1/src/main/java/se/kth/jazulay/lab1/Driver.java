@@ -22,10 +22,10 @@ public class Driver {
  
         // Test a triangle with each generator
         for (Pascal p : pascals) {
-            Stopwatch sw = Stopwatch.createStarted();
-            p.printPascal(15);
             System.out.flush();
             System.err.flush();
+            Stopwatch sw = Stopwatch.createStarted();
+            p.printPascal(24);
             System.err.println("");
             System.err.println("----------");
             System.err.println("Time: " + sw);
@@ -33,6 +33,8 @@ public class Driver {
         }
         // test some binom values
         for (Pascal p : pascals) {
+            System.out.flush();
+            System.err.flush();
             Stopwatch sw = Stopwatch.createStarted();
             System.err.println("");
             testBinom(p, 10, 4);
