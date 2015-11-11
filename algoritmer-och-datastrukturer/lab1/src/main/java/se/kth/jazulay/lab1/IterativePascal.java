@@ -30,6 +30,12 @@ public class IterativePascal extends ErrorPascal {
     @Override
     public int binom(int n, int k) {
         this.validateBinomInput(n, k);
+        
+        if (k > n/2) {
+            // use symmetry, prevents caching same values
+            k = n - k;
+        }
+        
         return this.factorial(n).divide(this.factorial(k).multiply(this.factorial(n - k))).intValue();
     }
     

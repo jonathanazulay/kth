@@ -31,6 +31,11 @@ public class RecursivePascal extends ErrorPascal {
             return 1;
         }
         
+        if (k > n/2) {
+            // use symmetry, prevents caching same values
+            k = n - k;
+        }
+        
         Integer result = this.fetchCached(n, k);
         if (result == null) {
             result = binom(n - 1, k - 1) + binom(n - 1, k);
