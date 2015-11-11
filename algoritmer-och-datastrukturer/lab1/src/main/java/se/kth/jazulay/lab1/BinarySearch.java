@@ -19,11 +19,15 @@ import java.util.Arrays;
 
 public class BinarySearch {
 
+    private static int calls;
+    
     // return the index of the key in the sorted array a[]; -1 if not found
     public static int search(String key, String[] a) {
+        calls = 0;
         return search(key, a, 0, a.length);
     }
     public static int search(String key, String[] a, int lo, int hi) {
+        System.out.println("made call, " + ++calls);
         // possible key indices in [lo, hi)
         if (hi <= lo) return -1;
         int mid = lo + (hi - lo) / 2;
@@ -36,6 +40,10 @@ public class BinarySearch {
 
     // whitelist, exception filter
     public static void main(String[] args) {
+        System.out.println(search("1", new String[]{"1", "2", "3", "4", "5", "6", "7", "8"})); // worst case
+        System.out.println(search("5", new String[]{"1", "2", "3", "4", "5", "6", "7", "8"})); // best case
+        
+        
         In in = new In("largeW.txt");
         String s = in.readAll();
         String[] words = s.split("\\s+");
