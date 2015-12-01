@@ -64,10 +64,29 @@ public class TinySearchEngine implements TinySearchEngineBase {
         
         if (result != -1) {
             for (Attributes attribute : this.words.get(result).attributes) {
-                
+                searchResult.add(attribute.document);
             }
         }
-        return searchResult;
+        return distinct(searchResult);
+    }
+
+    private <T> List<T> distinct (List<T> list) {
+        List<T> distinctList = new ArrayList<>();
+
+        for (T e : list) {
+            boolean found = false;
+            for (T e2 : distinctList) {
+                if (e2.equals(e)) {
+                    found = true;
+                    break;
+                }
+            }
+            if (!found) {
+                distinctList.add(e);
+            }
+        }
+
+        return distinctList;
     }
 
     private int binarySearch (String word) {
