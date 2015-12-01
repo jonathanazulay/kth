@@ -89,6 +89,11 @@ public class TinySearchEngine implements TinySearchEngineBase {
         return distinctList;
     }
 
+    /**
+     * Looks for a word in the index using binary search
+     * @param word to look for in the index
+     * @return Location in array if found, -1 if not found
+     */
     private int binarySearch (String word) {
         int lo = 0;
         int hi = this.words.size() - 1;
@@ -102,6 +107,13 @@ public class TinySearchEngine implements TinySearchEngineBase {
         return -1;
     }
     
+    /**
+     * Returns a possible correct position of a string in the sorted index.
+     * It's like a binary search but instead of returning -1 if item is not
+     * found, It returns the position it would have existed at if it existed.
+     * @param word
+     * @return the index to place word at in order to keep array sorted
+     */
     private int sortedPosition (String word) {
         int lo = 0;
         int hi = this.words.size() - 1;
