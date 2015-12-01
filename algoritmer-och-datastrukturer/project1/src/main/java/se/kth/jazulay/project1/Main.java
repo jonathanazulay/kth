@@ -7,9 +7,5 @@ public class Main {
     public static void main (String[] args) throws Exception {
         TinySearchEngine searchEngine = new TinySearchEngine();
         Driver.run(searchEngine);
-        
- 
-        
-        
     }
 }
