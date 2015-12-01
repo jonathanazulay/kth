@@ -8,7 +8,7 @@ import se.kth.id1020.util.Attributes;
 import se.kth.id1020.util.Document;
 import se.kth.id1020.util.Word;
 
-public class TinySearchEngine implements TinySearchEngineBase {
+public class TinySearchEngine implements TinySearchEngineBase, OrderableSearchEngine {
 
     /**
      * This ArrayList Contains one WordAttributesList for each distinct(!) word.
@@ -18,6 +18,8 @@ public class TinySearchEngine implements TinySearchEngineBase {
      * to be sorted multiple times.
      */
     private final ArrayList<WordAttributesList> words = new ArrayList();
+    
+    private final QueryParser queryParser = new QueryParser(this);
     
     class WordAttributesList {
         public String word;
@@ -58,16 +60,22 @@ public class TinySearchEngine implements TinySearchEngineBase {
 
     @Override
     public List<Document> search(String string) {
+        return queryParser.execute(string);
+    }
+    
+    @Override
+    public List<Document> search (String[] words, String orderBy, String direction) {
         List<Document> searchResult = new ArrayList();
-        
-        int result = this.binarySearch(string);
-        
-        if (result != -1) {
-            for (Attributes attribute : this.words.get(result).attributes) {
-                searchResult.add(attribute.document);
+        for (String word : words) {
+            int result = this.binarySearch(word);
+            if (result != -1) {
+                for (Attributes attribute : this.words.get(result).attributes) {
+                    searchResult.add(attribute.document);
+                }
             }
         }
-        return distinct(searchResult);
+        searchResult = distinct(searchResult);
+        return searchResult;
     }
 
     private <T> List<T> distinct (List<T> list) {
@@ -112,7 +120,7 @@ public class TinySearchEngine implements TinySearchEngineBase {
      * It's like a binary search but instead of returning -1 if item is not
      * found, It returns the position it would have existed at if it existed.
      * @param word
-     * @return the index to place word at in order to keep array sorted
+     * @return the index to place the word at in order to keep array sorted
      */
     private int sortedPosition (String word) {
         int lo = 0;
