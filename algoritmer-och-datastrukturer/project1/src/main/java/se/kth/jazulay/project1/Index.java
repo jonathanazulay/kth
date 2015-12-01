@@ -17,7 +17,7 @@ public class Index {
     
     class WordAttributesList {
         public String word;
-        public final ArrayList<Word> words = new ArrayList();
+        public final ArrayList<Word> occurances = new ArrayList();
         public final ArrayList<Attributes> attributes = new ArrayList();
 
         public WordAttributesList (String word) {
@@ -26,7 +26,7 @@ public class Index {
         
         public void add (Word word, Attributes attrs) {
             if (this.word.equals(word.word)) {
-                this.words.add(word);
+                this.occurances.add(word);
                 this.attributes.add(attrs);
             } else {
                 throw new Error("word has to match the word for this collection (" + this.word + ")");

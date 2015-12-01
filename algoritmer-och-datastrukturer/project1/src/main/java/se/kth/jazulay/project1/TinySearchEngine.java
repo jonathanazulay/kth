@@ -2,6 +2,7 @@ package se.kth.jazulay.project1;
 
 import java.util.List;
 import java.util.ArrayList;
+import java.util.Comparator;
 
 import se.kth.id1020.TinySearchEngineBase;
 import se.kth.id1020.util.Attributes;
@@ -25,6 +26,11 @@ public class TinySearchEngine implements TinySearchEngineBase, OrderableSearchEn
     
     @Override
     public List<Document> search (String[] words, String orderBy, String direction) {
+        boolean reverse = false;
+        if (direction != null && direction.equals("desc")) {
+            reverse = true;
+        }
+        
         List<Document> searchResult = new ArrayList();
         for (String word : words) {
             int result = this.binarySearch(word);
@@ -35,7 +41,38 @@ public class TinySearchEngine implements TinySearchEngineBase, OrderableSearchEn
             }
         }
         searchResult = distinct(searchResult);
+        
+        this.bubbleSort(searchResult, new Comparator<Document>() {
+            @Override
+            public int compare(Document o1, Document o2) {
+                if (o1.popularity < o2.popularity) { return -1; }
+                else if (o1.popularity > o2.popularity) { return 1; }
+                else { return 0; }
+            }
+        }, reverse);
         return searchResult;
+    }
+    
+    private void bubbleSort (List<Document> list, Comparator<Document> comparator, boolean reverse) {
+        int shouldReverse = reverse ? -1 : 1;
+        int r = list.size() - 2;
+        boolean swapped = true;
+        
+        while (r >= 0 && swapped) {
+            swapped = false;
+            
+            for (int i = 0; i <= r; i += 1) {
+                int compareResult = comparator.compare(list.get(i), list.get(i + 1)) * shouldReverse;
+                
+                if (compareResult > 0) {
+                    Document temp = list.get(i);
+                    list.set(i, list.get(i + 1));
+                    list.set(i + 1, temp);
+                    swapped = true;
+                }
+            }
+            r -= 1;
+        }
     }
 
     private <T> List<T> distinct (List<T> list) {
