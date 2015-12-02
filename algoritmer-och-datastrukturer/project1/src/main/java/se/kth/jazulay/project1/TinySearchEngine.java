@@ -8,6 +8,7 @@ import se.kth.id1020.TinySearchEngineBase;
 import se.kth.id1020.util.Attributes;
 import se.kth.id1020.util.Document;
 import se.kth.id1020.util.Word;
+import se.kth.jazulay.project1.Index.WordAttribute;
 
 public class TinySearchEngine implements TinySearchEngineBase, OrderableSearchEngine {
 
@@ -35,8 +36,8 @@ public class TinySearchEngine implements TinySearchEngineBase, OrderableSearchEn
         for (String word : words) {
             int result = this.binarySearch(word);
             if (result != -1) {
-                for (Attributes attribute : this.index.words.get(result).attributes) {
-                    searchResult.add(attribute.document);
+                for (WordAttribute wa : this.index.words.get(result)) {
+                    searchResult.add(wa.attributes.document);
                 }
             }
         }
@@ -104,7 +105,7 @@ public class TinySearchEngine implements TinySearchEngineBase, OrderableSearchEn
         int hi = this.index.words.size() - 1;
         while (lo <= hi) {
             int mid = lo + (hi - lo) / 2;
-            int comparison = word.compareTo(this.index.words.get(mid).word);
+            int comparison = word.compareTo(this.index.words.get(mid).get(0).word.word);
             if      (comparison < 0) hi = mid - 1;
             else if (comparison > 0) lo = mid + 1;
             else return mid;

@@ -5,33 +5,23 @@ import se.kth.id1020.util.Attributes;
 import se.kth.id1020.util.Word;
 
 public class Index {
-    
     /**
-     * This ArrayList Contains one WordAttributesList for each distinct(!) word.
+     * Uses a nested ArrayList where each nested list element contains just equal words
      * 
      * This makes indexing really fast when the same word
      * occurs many times because the same word does not have
      * to be sorted multiple times.
      */
-    public final ArrayList<WordAttributesList> words = new ArrayList();
+    public final ArrayList<ArrayList<WordAttribute>> words = new ArrayList();
     
-    class WordAttributesList {
-        public String word;
-        public final ArrayList<Word> occurances = new ArrayList();
-        public final ArrayList<Attributes> attributes = new ArrayList();
-
-        public WordAttributesList (String word) {
-            this.word = word;
-        }
+    class WordAttribute {
+        public Word word;
+        public Attributes attributes;
         
-        public void add (Word word, Attributes attrs) {
-            if (this.word.equals(word.word)) {
-                this.occurances.add(word);
-                this.attributes.add(attrs);
-            } else {
-                throw new Error("word has to match the word for this collection (" + this.word + ")");
-            }
-        }
+        public WordAttribute (Word word, Attributes attributes) {
+            this.word = word;
+            this.attributes = attributes;
+        }    
     }
     
     public void addWord (Word word, Attributes attrs) {
@@ -39,14 +29,14 @@ public class Index {
         
         boolean wordExists = false;
         if (insertAt < this.words.size()) {
-            wordExists = this.words.get(insertAt).word.equals(word.word);
+            wordExists = this.words.get(insertAt).get(0).word.word.equals(word.word);
         }
         
         if (wordExists) {
-            this.words.get(insertAt).add(word, attrs);
+            this.words.get(insertAt).add(new WordAttribute(word, attrs));
         } else {
-            WordAttributesList newList = new WordAttributesList(word.word);
-            newList.add(word, attrs);
+            ArrayList<WordAttribute> newList = new ArrayList();
+            newList.add(new WordAttribute(word, attrs));
             this.words.add(insertAt, newList);
         }
     }
@@ -63,7 +53,7 @@ public class Index {
         int hi = this.words.size() - 1;
         while (lo <= hi) {
             int mid = lo + (hi - lo) / 2;
-            int comparison = word.compareTo(this.words.get(mid).word);
+            int comparison = word.compareTo(this.words.get(mid).get(0).word.word);
             if      (comparison < 0) hi = mid - 1;
             else if (comparison > 0) lo = mid + 1;
             else return mid;
