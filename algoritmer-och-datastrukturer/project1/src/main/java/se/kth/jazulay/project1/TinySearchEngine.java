@@ -100,22 +100,22 @@ public class TinySearchEngine implements TinySearchEngineBase, OrderableSearchEn
         sorter.sort(wordAttributes, reverse);
     }
 
+    /**
+     * Returns a new list with only distinct elements, assumes list is sorted
+     * @param <T> type of elements
+     * @param list to sort
+     * @return 
+     */
     private <T> List<T> distinct (List<T> list) {
         List<T> distinctList = new ArrayList<>();
 
+        T lastElement = null;
         for (T e : list) {
-            boolean found = false;
-            for (T e2 : distinctList) {
-                if (e2.equals(e)) {
-                    found = true;
-                    break;
-                }
-            }
-            if (!found) {
+            if (lastElement == null || !lastElement.equals(e)) {
                 distinctList.add(e);
             }
+            lastElement = e;
         }
-
         return distinctList;
     }
     
