@@ -43,18 +43,11 @@ public class TinySearchEngine implements TinySearchEngineBase, OrderableSearchEn
         }
         
         if (orderBy != null) {
-            switch (orderBy) {
-                case "occurance":
-                    this.sortByOccurance(tempResult, reverse);
-                    break;
-                case "popularity":
-                    this.sortByPopularity(tempResult, reverse);
-                    break;
-                case "count":
-                    this.sortByCount(tempResult, reverse);
-                    break;
-            }
+            this.sortBy(orderBy, tempResult, reverse);
         }
+        
+        this.sortByDocumentName(tempResult, false);
+        
         
         List<Document> searchResult = new ArrayList();
         for (WordAttribute wa : tempResult) {
@@ -62,6 +55,30 @@ public class TinySearchEngine implements TinySearchEngineBase, OrderableSearchEn
         }
         
         return this.distinct(searchResult);
+    }
+    
+    private void sortBy (String by, List<WordAttribute> wordAttributes, boolean reverse) {
+        switch (by) {
+            case "occurance":
+                this.sortByOccurance(wordAttributes, reverse);
+                break;
+            case "popularity":
+                this.sortByPopularity(wordAttributes, reverse);
+                break;
+            case "count":
+                this.sortByCount(wordAttributes, reverse);
+                break;
+        }
+    }
+    
+    private void sortByDocumentName (List<WordAttribute> wordAttributes, boolean reverse) {
+        BubbleSort<WordAttribute> sorter = new BubbleSort(new Comparator<WordAttribute>() {
+            @Override
+            public int compare(WordAttribute o1, WordAttribute o2) {
+                return o1.attributes.document.name.compareTo(o2.attributes.document.name);
+            }
+        });
+        sorter.sort(wordAttributes, reverse);
     }
     
     private void sortByCount (List<WordAttribute> wordAttributes, boolean reverse) {
@@ -104,7 +121,7 @@ public class TinySearchEngine implements TinySearchEngineBase, OrderableSearchEn
      * Returns a new list with only distinct elements, assumes list is sorted
      * @param <T> type of elements
      * @param list to sort
-     * @return 
+     * @return new distinct list
      */
     private <T> List<T> distinct (List<T> list) {
         List<T> distinctList = new ArrayList<>();
