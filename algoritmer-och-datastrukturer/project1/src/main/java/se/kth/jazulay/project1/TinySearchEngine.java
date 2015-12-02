@@ -32,29 +32,65 @@ public class TinySearchEngine implements TinySearchEngineBase, OrderableSearchEn
             reverse = true;
         }
         
-        List<Document> searchResult = new ArrayList();
+        List<WordAttribute> tempResult = new ArrayList();
         for (String word : words) {
             int result = this.binarySearch(word);
             if (result != -1) {
                 for (WordAttribute wa : this.index.words.get(result)) {
-                    searchResult.add(wa.attributes.document);
+                    tempResult.add(wa);
                 }
             }
         }
-        searchResult = distinct(searchResult);
         
-        this.bubbleSort(searchResult, new Comparator<Document>() {
-            @Override
-            public int compare(Document o1, Document o2) {
-                if (o1.popularity < o2.popularity) { return -1; }
-                else if (o1.popularity > o2.popularity) { return 1; }
-                else { return 0; }
-            }
-        }, reverse);
+        orderBy = "popularity";
+        switch (orderBy) {
+            case "occurance":
+                this.sortByOccurance(tempResult, reverse);
+                break;
+            case "popularity":
+                this.sortByPopularity(tempResult, reverse);
+                break;
+            case "count":
+                this.sortByCount(tempResult, reverse);
+                break;
+        }
+        
+        
+        List<Document> searchResult = new ArrayList();
+        for (WordAttribute wa : tempResult) {
+            searchResult.add(wa.attributes.document);
+        }
+        
         return searchResult;
     }
     
-    private void bubbleSort (List<Document> list, Comparator<Document> comparator, boolean reverse) {
+    private void sortByCount (List<WordAttribute> wordAttributes, boolean reverse) {
+        
+    }
+    
+    private void sortByPopularity (List<WordAttribute> wordAttributes, boolean reverse) {
+        this.bubbleSort(wordAttributes, new Comparator<WordAttribute>() {
+            @Override
+            public int compare(WordAttribute o1, WordAttribute o2) {
+                if (o1.attributes.document.popularity < o2.attributes.document.popularity) { return -1; }
+                else if (o1.attributes.document.popularity > o2.attributes.document.popularity) { return 1; }
+                else { return 0; }
+            }
+        }, reverse);
+    }
+    
+    private void sortByOccurance (List<WordAttribute> wordAttributes, boolean reverse) {
+        this.bubbleSort(wordAttributes, new Comparator<WordAttribute>() {
+            @Override
+            public int compare(WordAttribute o1, WordAttribute o2) {
+                if (o1.attributes.occurrence < o2.attributes.occurrence) { return -1; }
+                else if (o1.attributes.occurrence > o2.attributes.occurrence) { return 1; }
+                else { return 0; }
+            }
+        }, reverse);
+    }
+    
+    private void bubbleSort (List<WordAttribute> list, Comparator<WordAttribute> comparator, boolean reverse) {
         int shouldReverse = reverse ? -1 : 1;
         int r = list.size() - 2;
         boolean swapped = true;
@@ -66,7 +102,7 @@ public class TinySearchEngine implements TinySearchEngineBase, OrderableSearchEn
                 int compareResult = comparator.compare(list.get(i), list.get(i + 1)) * shouldReverse;
                 
                 if (compareResult > 0) {
-                    Document temp = list.get(i);
+                    WordAttribute temp = list.get(i);
                     list.set(i, list.get(i + 1));
                     list.set(i + 1, temp);
                     swapped = true;
@@ -74,25 +110,6 @@ public class TinySearchEngine implements TinySearchEngineBase, OrderableSearchEn
             }
             r -= 1;
         }
-    }
-
-    private <T> List<T> distinct (List<T> list) {
-        List<T> distinctList = new ArrayList<>();
-
-        for (T e : list) {
-            boolean found = false;
-            for (T e2 : distinctList) {
-                if (e2.equals(e)) {
-                    found = true;
-                    break;
-                }
-            }
-            if (!found) {
-                distinctList.add(e);
-            }
-        }
-
-        return distinctList;
     }
 
     /**
