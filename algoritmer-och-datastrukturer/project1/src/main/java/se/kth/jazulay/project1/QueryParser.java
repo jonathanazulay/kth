@@ -13,7 +13,11 @@ public class QueryParser {
         String[] strings = query.split("\\s+");
         
         if (strings.length >= 4 && strings[strings.length - 3].equals("orderBy")) {
-            return searchEngine.search(new String[]{strings[0]}, strings[strings.length - 2], strings[strings.length - 1]);
+            String[] searchTerms = new String[strings.length - 3];
+            for (int i = 0; i < strings.length - 3; i += 1) {
+                searchTerms[i] = strings[i];
+            }
+            return searchEngine.search(searchTerms, strings[strings.length - 2], strings[strings.length - 1]);
         } else {
             return searchEngine.search(strings, null, null);
         }

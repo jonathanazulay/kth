@@ -56,71 +56,69 @@ public class TinySearchEngine implements TinySearchEngineBase, OrderableSearchEn
             }
         }
         
-        
-        
         List<Document> searchResult = new ArrayList();
         for (WordAttribute wa : tempResult) {
             searchResult.add(wa.attributes.document);
         }
         
-        return searchResult;
+        return this.distinct(searchResult);
     }
     
     private void sortByCount (List<WordAttribute> wordAttributes, boolean reverse) {
-        this.bubbleSort(wordAttributes, new Comparator<WordAttribute>() {
+        BubbleSort<WordAttribute> sorter = new BubbleSort(new Comparator<WordAttribute>() {
             @Override
             public int compare(WordAttribute o1, WordAttribute o2) {
                 if (o1.count < o2.count) { return -1; }
                 else if (o1.count > o2.count) { return 1; }
                 else { return 0; }
             }
-        }, reverse);
+        });
+        sorter.sort(wordAttributes, reverse);
     }
     
     private void sortByPopularity (List<WordAttribute> wordAttributes, boolean reverse) {
-        this.bubbleSort(wordAttributes, new Comparator<WordAttribute>() {
+        BubbleSort<WordAttribute> sorter = new BubbleSort(new Comparator<WordAttribute>() {
             @Override
             public int compare(WordAttribute o1, WordAttribute o2) {
                 if (o1.attributes.document.popularity < o2.attributes.document.popularity) { return -1; }
                 else if (o1.attributes.document.popularity > o2.attributes.document.popularity) { return 1; }
                 else { return 0; }
             }
-        }, reverse);
+        });
+        sorter.sort(wordAttributes, reverse);
     }
     
     private void sortByOccurance (List<WordAttribute> wordAttributes, boolean reverse) {
-        this.bubbleSort(wordAttributes, new Comparator<WordAttribute>() {
+        BubbleSort<WordAttribute> sorter = new BubbleSort(new Comparator<WordAttribute>() {
             @Override
             public int compare(WordAttribute o1, WordAttribute o2) {
                 if (o1.attributes.occurrence < o2.attributes.occurrence) { return -1; }
                 else if (o1.attributes.occurrence > o2.attributes.occurrence) { return 1; }
                 else { return 0; }
             }
-        }, reverse);
-    }
-    
-    private void bubbleSort (List<WordAttribute> list, Comparator<WordAttribute> comparator, boolean reverse) {
-        int shouldReverse = reverse ? -1 : 1;
-        int r = list.size() - 2;
-        boolean swapped = true;
-        
-        while (r >= 0 && swapped) {
-            swapped = false;
-            
-            for (int i = 0; i <= r; i += 1) {
-                int compareResult = comparator.compare(list.get(i), list.get(i + 1)) * shouldReverse;
-                
-                if (compareResult > 0) {
-                    WordAttribute temp = list.get(i);
-                    list.set(i, list.get(i + 1));
-                    list.set(i + 1, temp);
-                    swapped = true;
-                }
-            }
-            r -= 1;
-        }
+        });
+        sorter.sort(wordAttributes, reverse);
     }
 
+    private <T> List<T> distinct (List<T> list) {
+        List<T> distinctList = new ArrayList<>();
+
+        for (T e : list) {
+            boolean found = false;
+            for (T e2 : distinctList) {
+                if (e2.equals(e)) {
+                    found = true;
+                    break;
+                }
+            }
+            if (!found) {
+                distinctList.add(e);
+            }
+        }
+
+        return distinctList;
+    }
+    
     /**
      * Looks for a word in the index using binary search
      * @param word to look for in the index
