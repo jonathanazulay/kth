@@ -62,7 +62,7 @@ public class TinySearchEngine implements TinySearchEngineBase, OrderableSearchEn
             case "count":
                 this.sortByCount(wordAttributes, reverse);
                 break;
-            case "occurance":
+            case "occurrence":
                 this.sortByOccurance(wordAttributes, reverse);
                 break;
         }
