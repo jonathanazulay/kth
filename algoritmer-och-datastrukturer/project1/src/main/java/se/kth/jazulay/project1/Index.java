@@ -22,7 +22,6 @@ public class Index {
         public WordAttribute (Word word, Attributes attributes) {
             this.word = word;
             this.attributes = attributes;
-            this.count = 1;
         }    
     }
     
@@ -37,20 +36,9 @@ public class Index {
         }
         
         if (wordExists) {
-            this.incrementOccuranceCount(insertAt, wa);
             this.addToExistingList(wa, insertAt);
         } else {
             this.addToNewList(wa, insertAt);
-        }
-    }
-    
-    private void incrementOccuranceCount (int index, WordAttribute wordAttr) {
-        int count = 0;
-        for (WordAttribute wa : this.words.get(index)) {
-            if (wa.attributes.document.name.equals(wordAttr.attributes.document.name)) {
-                wa.count += 1;
-                wordAttr.count = wa.count;
-            }
         }
     }
     
