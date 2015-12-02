@@ -25,6 +25,8 @@ public class Index {
     }
     
     public void addWord (Word word, Attributes attrs) {
+        WordAttribute wa = new WordAttribute(word, attrs);
+        
         int insertAt = this.sortedPosition(word.word);
         
         boolean wordExists = false;
@@ -33,12 +35,20 @@ public class Index {
         }
         
         if (wordExists) {
-            this.words.get(insertAt).add(new WordAttribute(word, attrs));
+            this.addToExistingList(wa, insertAt);
         } else {
-            ArrayList<WordAttribute> newList = new ArrayList();
-            newList.add(new WordAttribute(word, attrs));
-            this.words.add(insertAt, newList);
+            this.addToNewList(wa, insertAt);
         }
+    }
+    
+    private void addToExistingList (WordAttribute wa, int index) {
+        this.words.get(index).add(wa);
+    }
+    
+    private void addToNewList (WordAttribute wa, int index) {
+        ArrayList<WordAttribute> newList = new ArrayList();
+        newList.add(wa);
+        this.words.add(index, newList);
     }
     
     /**
