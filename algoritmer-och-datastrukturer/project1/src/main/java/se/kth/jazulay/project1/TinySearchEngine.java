@@ -42,18 +42,20 @@ public class TinySearchEngine implements TinySearchEngineBase, OrderableSearchEn
             }
         }
         
-        orderBy = "popularity";
-        switch (orderBy) {
-            case "occurance":
-                this.sortByOccurance(tempResult, reverse);
-                break;
-            case "popularity":
-                this.sortByPopularity(tempResult, reverse);
-                break;
-            case "count":
-                this.sortByCount(tempResult, reverse);
-                break;
+        if (orderBy != null) {
+            switch (orderBy) {
+                case "occurance":
+                    this.sortByOccurance(tempResult, reverse);
+                    break;
+                case "popularity":
+                    this.sortByPopularity(tempResult, reverse);
+                    break;
+                case "count":
+                    this.sortByCount(tempResult, reverse);
+                    break;
+            }
         }
+        
         
         
         List<Document> searchResult = new ArrayList();
@@ -65,7 +67,14 @@ public class TinySearchEngine implements TinySearchEngineBase, OrderableSearchEn
     }
     
     private void sortByCount (List<WordAttribute> wordAttributes, boolean reverse) {
-        
+        this.bubbleSort(wordAttributes, new Comparator<WordAttribute>() {
+            @Override
+            public int compare(WordAttribute o1, WordAttribute o2) {
+                if (o1.count < o2.count) { return -1; }
+                else if (o1.count > o2.count) { return 1; }
+                else { return 0; }
+            }
+        }, reverse);
     }
     
     private void sortByPopularity (List<WordAttribute> wordAttributes, boolean reverse) {

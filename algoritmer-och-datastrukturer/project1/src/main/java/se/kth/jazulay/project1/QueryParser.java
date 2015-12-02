@@ -13,10 +13,9 @@ public class QueryParser {
         String[] strings = query.split("\\s+");
         
         if (strings.length >= 4 && strings[strings.length - 3].equals("orderBy")) {
-            System.out.println("order by" + strings[strings.length - 2] + strings[strings.length - 1]);
+            return searchEngine.search(new String[]{strings[0]}, strings[strings.length - 2], strings[strings.length - 1]);
+        } else {
+            return searchEngine.search(strings, null, null);
         }
-        
-        
-        return searchEngine.search(strings, null, null);
     }
 }
