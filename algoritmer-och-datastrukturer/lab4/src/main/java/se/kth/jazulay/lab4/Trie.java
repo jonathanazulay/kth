@@ -23,7 +23,7 @@ public class Trie {
         }
         
         char first = k.charAt(0);
-        int childPos = first - 97;
+        int childPos = this.getArrayPos(first);
         Trie child = children[childPos];
         String rest = k.substring(1);
         
@@ -64,5 +64,9 @@ public class Trie {
     
     public Iterator<java.util.Map.Entry<String, Integer>> iterator (String k) {
         return null;
+    }
+    
+    private int getArrayPos (char c) {
+        return c - 97;
     }
 }
