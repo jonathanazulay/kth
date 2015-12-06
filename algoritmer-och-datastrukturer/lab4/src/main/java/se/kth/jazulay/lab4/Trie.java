@@ -10,7 +10,7 @@ public class Trie {
      * Inserts k into the structure.
      * If k was not associated with any value v before,
      * associate it with 1, otherwise with v + 1 where v was the old value.
-     * @param k put into structure
+     * @param k key to put into trie
      */
     public void put (String k) {
         if (k.length() == 0) {
