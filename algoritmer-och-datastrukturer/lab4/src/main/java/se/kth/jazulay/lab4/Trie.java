@@ -32,7 +32,7 @@ public class Trie {
             child.c = first;
             children[childPos] = child;
         }
-        child.put(rest);    
+        child.put(rest);
     }
     
     /**
@@ -41,7 +41,25 @@ public class Trie {
      * @return associated value
      */
     public int get (String k) {
-        return 0;
+        if (k.length() == 0) {
+            if (this.isValue) {
+                return this.value;
+            } else {
+                return 0;
+            }
+            
+        }
+        
+        char first = k.charAt(0);
+        int childPos = this.getArrayPos(first);
+        Trie child = children[childPos];
+        
+        if (child == null) {
+            return 0;
+        }
+        
+        String rest = k.substring(1);
+        return child.get(rest);
     }
     
     /**
