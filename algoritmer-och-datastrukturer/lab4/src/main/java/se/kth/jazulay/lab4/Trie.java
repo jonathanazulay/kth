@@ -36,20 +36,11 @@ public class Trie {
      * @return associated value
      */
     public int get (String k) {
-        if (k.length() == 0) {
-            return this.value;       
+        Trie child = this.getChild(k);
+        if (child != null) {
+            return child.value;
         }
-        
-        char first = k.charAt(0);
-        int childPos = this.getArrayPos(first);
-        Trie child = children[childPos];
-        
-        if (child == null) {
-            return 0;
-        }
-        
-        String rest = k.substring(1);
-        return child.get(rest);
+        return 0;
     }
     
     /**
@@ -58,7 +49,21 @@ public class Trie {
      * @return sum of all associated values
      */
     public int count (String k) {
-        return 0;
+        if (k.length() == 0) {            
+            int count = this.value;
+            for (Trie child : children) {
+                if (child == null) { continue; }
+                count += child.count(k);
+            }
+            return count;
+        } else {
+            Trie child = this.getChild(k);
+            if (child == null) {
+                return 0;
+            } else {
+                return child.count("");
+            }
+        }        
     }
     
     /**
@@ -75,6 +80,26 @@ public class Trie {
     }
     
     private int getArrayPos (char c) {
+        if (c < 97) {
+            c = (char) (c + 32);
+        }
         return c - 97;
+    }
+    
+    private Trie getChild (String k) {
+        if (k.length() == 0) {
+            return this;       
+        }
+        
+        char first = k.charAt(0);
+        int childPos = this.getArrayPos(first);
+        Trie child = children[childPos];
+        
+        if (child == null) {
+            return null;
+        }
+        
+        String rest = k.substring(1);
+        return child.getChild(rest);
     }
 }
