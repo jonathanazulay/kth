@@ -3,8 +3,6 @@ package se.kth.jazulay.lab4;
 import java.util.Iterator;
 
 public class Trie {
-    
-    public char c = ' ';
     public int value = 0;
     private Trie[] children = new Trie[26];
 
@@ -27,7 +25,6 @@ public class Trie {
         
         if (child == null) {
             child = new Trie();
-            child.c = first;
             children[childPos] = child;
         }
         child.put(rest);
