@@ -1,6 +1,8 @@
 package se.kth.jazulay.lab4;
 
+import java.util.AbstractMap;
 import java.util.Iterator;
+import java.util.Map;
 
 public class Trie {
     public int value = 0;
@@ -92,10 +94,22 @@ public class Trie {
             return child.distinct("");
         }
     }
-    
+
     public Iterator<java.util.Map.Entry<String, Integer>> iterator (String k) {
-        return null;
+        return new Iterator<Map.Entry<String, Integer>>() {
+            @Override
+            public boolean hasNext() {
+                return false;
+            }
+
+            @Override
+            public Map.Entry<String, Integer> next() {
+                return new AbstractMap.SimpleEntry(null, 0);
+            }
+        };
     }
+    
+    
     
     private int getArrayPos (char c) {
         if (c < 97) {
