@@ -79,9 +79,8 @@ public class Trie {
             }
             
             for (Trie child : children) {
-                if (child != null) {
-                    count += child.distinct(k);
-                }
+                if (child == null) { continue; }
+                count += child.distinct(k);
             }
             return count;
         }
