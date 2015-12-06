@@ -4,6 +4,11 @@ import java.util.Iterator;
 
 public class Trie {
     
+    public char c = ' ';
+    public int value = 0;
+    public boolean isValue = false;
+    private Trie[] children = new Trie[26];
+
     /**
      * Inserts k into the structure.
      * If k was not associated with any value v before,
@@ -11,7 +16,23 @@ public class Trie {
      * @param k put into structure
      */
     public void put (String k) {
+        if (k.length() == 0) {
+            this.isValue = true;
+            this.value += 1;
+            return;
+        }
         
+        char first = k.charAt(0);
+        int childPos = first - 97;
+        Trie child = children[childPos];
+        String rest = k.substring(1);
+        
+        if (child == null) {
+            child = new Trie();
+            child.c = first;
+            children[childPos] = child;
+        }
+        child.put(rest);    
     }
     
     /**
