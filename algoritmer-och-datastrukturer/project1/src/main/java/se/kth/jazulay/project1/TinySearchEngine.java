@@ -27,11 +27,6 @@ public class TinySearchEngine implements TinySearchEngineBase, OrderableSearchEn
     
     @Override
     public List<Document> search (String[] words, String orderBy, String direction) {
-        boolean reverse = false;
-        if (direction != null && direction.equals("desc")) {
-            reverse = true;
-        }
-        
         List<WordAttribute> tempResult = new ArrayList();
         for (String word : words) {
             int result = this.binarySearch(word);
@@ -43,6 +38,10 @@ public class TinySearchEngine implements TinySearchEngineBase, OrderableSearchEn
         }
         
         if (orderBy != null) {
+            boolean reverse = false;
+            if (direction.equals("desc")) {
+                reverse = true;
+            }   
             this.sortBy(orderBy, tempResult, reverse);
         }
         

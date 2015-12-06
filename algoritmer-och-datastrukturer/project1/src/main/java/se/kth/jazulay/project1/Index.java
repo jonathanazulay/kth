@@ -17,7 +17,6 @@ public class Index {
     class WordAttribute {
         public Word word;
         public Attributes attributes;
-        public int count;
         
         public WordAttribute (Word word, Attributes attributes) {
             this.word = word;
