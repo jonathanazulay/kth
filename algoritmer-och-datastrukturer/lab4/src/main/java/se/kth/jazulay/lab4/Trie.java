@@ -6,7 +6,6 @@ public class Trie {
     
     public char c = ' ';
     public int value = 0;
-    public boolean isValue = false;
     private Trie[] children = new Trie[26];
 
     /**
@@ -17,7 +16,6 @@ public class Trie {
      */
     public void put (String k) {
         if (k.length() == 0) {
-            this.isValue = true;
             this.value += 1;
             return;
         }
@@ -42,12 +40,7 @@ public class Trie {
      */
     public int get (String k) {
         if (k.length() == 0) {
-            if (this.isValue) {
-                return this.value;
-            } else {
-                return 0;
-            }
-            
+            return this.value;       
         }
         
         char first = k.charAt(0);
