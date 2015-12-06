@@ -56,13 +56,13 @@ public class Trie {
                 count += child.count(k);
             }
             return count;
+        }
+        
+        Trie child = this.getChild(k);
+        if (child == null) {
+            return 0;
         } else {
-            Trie child = this.getChild(k);
-            if (child == null) {
-                return 0;
-            } else {
-                return child.count("");
-            }
+            return child.count("");
         }        
     }
     
