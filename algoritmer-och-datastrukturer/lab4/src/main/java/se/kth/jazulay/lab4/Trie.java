@@ -72,7 +72,26 @@ public class Trie {
      * @return distinct count
      */
     public int distinct (String k) {
-        return 0;
+        if (k.length() == 0) {
+            int count = 0;
+            if (this.value > 0) {
+                count = 1;
+            }
+            
+            for (Trie child : children) {
+                if (child != null) {
+                    count += child.distinct(k);
+                }
+            }
+            return count;
+        }
+        
+        Trie child = this.getChild(k);
+        if (child == null) {
+            return 0;
+        } else {
+            return child.distinct("");
+        }
     }
     
     public Iterator<java.util.Map.Entry<String, Integer>> iterator (String k) {
