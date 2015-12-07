@@ -7,6 +7,7 @@ import java.util.Map;
 public class Trie {
     public int value = 0;
     private Trie[] children = new Trie[128];
+    private int childCount = 0;
 
     /**
      * Inserts k into the structure.
@@ -28,6 +29,7 @@ public class Trie {
         if (child == null) {
             child = new Trie();
             children[childPos] = child;
+            childCount += 1;
         }
         child.put(rest);
     }
