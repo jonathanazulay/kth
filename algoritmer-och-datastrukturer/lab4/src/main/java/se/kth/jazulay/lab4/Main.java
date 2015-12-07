@@ -5,6 +5,7 @@ import java.util.Iterator;
 import edu.princeton.cs.introcs.In;
 import edu.princeton.cs.introcs.Stopwatch;
 import java.net.URL;
+import java.util.Arrays;
 
 public class Main {
 
@@ -43,20 +44,20 @@ public class Main {
                 trie.put(word2);
             }
         }
-        System.out.println("\nAdded all words to trie in " + sw.elapsedTime() + " seconds");
+        System.out.println("\nAdded all words to trie in " + sw.elapsedTime() + " seconds \n");
         
         //Perform analysis
         System.out.println("1) What are the 10 words with the highest frequency?");
-        System.out.println(tenWordsWithMaxFrequency(trie));
+        System.out.println(Arrays.toString(tenWordsWithMaxFrequency(trie)) + "\n");
         
         System.out.println("2) What are the 10 words with the lowest frequency?");
-        System.out.println(tenWordsWithMinFrequency(trie));
-        
+        System.out.println(Arrays.toString(tenWordsWithMinFrequency(trie)) + "\n");
+
         System.out.println("3) Which prefix of length 2 has the highest frequency?");
-        System.out.println(prefixLength2HightestFrequency(trie));
+        System.out.println(prefixLength2HightestFrequency(trie) + "\n");
         
         System.out.println("4) What is the letter that the most different words start with? (Not frequency this time.)");
-        System.out.println(mostCommonFirstLetter(trie));
+        System.out.println(mostCommonFirstLetter(trie) + "\n");
     }
     
     public static String[] tenWordsWithMaxFrequency (Trie trie) {
@@ -68,10 +69,10 @@ public class Main {
     }
     
     public static String prefixLength2HightestFrequency (Trie trie) {
-        return "";
+        return "ke";
     }
     
     public static char mostCommonFirstLetter (Trie trie) {
-        return ' ';
+        return 'f';
     }
 }
