@@ -6,7 +6,7 @@ import java.util.Map;
 
 public class Trie {
     public int value = 0;
-    private Trie[] children = new Trie[26];
+    private Trie[] children = new Trie[128];
 
     /**
      * Inserts k into the structure.
@@ -112,8 +112,7 @@ public class Trie {
     
     
     private int getArrayPos (char c) {
-        c = Character.toLowerCase(c);
-        return c - 97;
+        return c;
     }
     
     private Trie getChild (String k) {
