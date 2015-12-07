@@ -112,9 +112,7 @@ public class Trie {
     
     
     private int getArrayPos (char c) {
-        if (c < 97) {
-            c = (char) (c + 32);
-        }
+        c = Character.toLowerCase(c);
         return c - 97;
     }
     
