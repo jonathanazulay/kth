@@ -44,32 +44,34 @@ public class Main {
             }
         }
         System.out.println("\nAdded all words to trie in " + sw.elapsedTime() + " seconds");
+        
         //Perform analysis
+        System.out.println("1) What are the 10 words with the highest frequency?");
+        System.out.println(tenWordsWithMaxFrequency(trie));
+        
+        System.out.println("2) What are the 10 words with the lowest frequency?");
+        System.out.println(tenWordsWithMinFrequency(trie));
+        
+        System.out.println("3) Which prefix of length 2 has the highest frequency?");
+        System.out.println(prefixLength2HightestFrequency(trie));
+        
+        System.out.println("4) What is the letter that the most different words start with? (Not frequency this time.)");
+        System.out.println(mostCommonFirstLetter(trie));
     }
-
-   public static void jonathanTest () {
-       Trie t = new Trie();
-        t.put("hej");
-        t.put("hej");
-        t.put("hejda");
-        t.put("hejdara");
-        
-        t.put("a");
-        t.put("abc");
-        t.put("abcd");
-        t.put("abcde");
-        t.put("abcdef");
-        t.put("abcdef");
-        t.put("abcdef");
-
-        System.out.println(t.distinct("a"));
-        System.out.println(t.distinct("abcd"));
-        System.out.println(t.distinct("hej"));
-        
-        
-        Iterator i = t.iterator("");
-        while (i.hasNext()) {
-            System.out.println(i.next());
-        }
-   }
+    
+    public static String[] tenWordsWithMaxFrequency (Trie trie) {
+        return new String[10];
+    }
+    
+    public static String[] tenWordsWithMinFrequency (Trie trie) {
+        return new String[10];
+    }
+    
+    public static String prefixLength2HightestFrequency (Trie trie) {
+        return "";
+    }
+    
+    public static char mostCommonFirstLetter (Trie trie) {
+        return ' ';
+    }
 }
