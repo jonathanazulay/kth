@@ -145,24 +145,27 @@ public class Trie {
 
             @Override
             public Map.Entry<String, Integer> next() {
+                // Pop three and position to process now
                 int pos = this.positionInTrie.pop();
                 Trie trie = this.currentTrie.pop();
+                
+                boolean wasMovingDown = isMovingDown;
+                int childsLeft = trie.childCount - pos;
 
-                java.util.Map.Entry<String, Integer> returnVal;
-                
-                if (pos + 1 < trie.childCount) {
-                    // There's more tries here to get back to
-                    this.positionInTrie.push(pos + 1);
-                    this.currentTrie.push(trie);
-                }
-                
-                if (pos > trie.childCount) {
+                if (childsLeft < 0) {
+                    // No elements of interest here, process next stack element
                     return this.next();
                 }
                 
-                boolean wasMovingDown = isMovingDown;
-                if (pos < trie.childCount) { 
-                    
+                if (childsLeft > 1) {
+                    // There's more tries here to get back to later, push current
+                    // trie and position + 1
+                    this.positionInTrie.push(pos + 1);
+                    this.currentTrie.push(trie);
+                }   
+                
+                if (childsLeft > 0) { 
+                    // Visit next child next iteration, starting at index zero
                     this.positionInTrie.push(0);
                     this.currentTrie.push(trie.getChild(pos));
                     isMovingDown = true;
@@ -170,18 +173,14 @@ public class Trie {
                     isMovingDown = false;
                 }
 
-                
-                if (trie.value > 0) {
-                    if (wasMovingDown) {
-                        returnVal = new SimpleEntry(sb.toString(), trie.value);
-                    } else {
-                        returnVal = this.next();
-                    }
+                if (trie.value > 0 && wasMovingDown) {
+                    // If this child has a value and we was moving down in trie
+                    // return the value
+                    return new SimpleEntry(sb.toString(), trie.value);
                 } else {
-                    returnVal = this.next();
+                    // Otherwise process next element in stack
+                    return this.next();
                 }
-                
-                return returnVal;
             }
             
             private void popChar () {
