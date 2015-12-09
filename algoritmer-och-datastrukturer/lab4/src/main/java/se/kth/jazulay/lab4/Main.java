@@ -6,6 +6,7 @@ import edu.princeton.cs.introcs.In;
 import edu.princeton.cs.introcs.Stopwatch;
 import java.net.URL;
 import java.util.Arrays;
+import java.util.Map.Entry;
 
 public class Main {
 
@@ -58,6 +59,28 @@ public class Main {
         
         System.out.println("4) What is the letter that the most different words start with? (Not frequency this time.)");
         System.out.println(mostCommonFirstLetter(trie) + "\n");
+        
+        
+        Trie trie2 = new Trie();
+        trie2.put("HEJ");
+        trie2.put("HEJ");
+        trie2.put("HE");
+        trie2.put("HEG");
+        trie2.put("GOA");
+        trie2.put("GOAD");
+        trie2.put("GOADE");
+        trie2.put("GOADF");
+        trie2.put("GOADFE");
+        trie2.put("GOADFE");
+        trie2.put("GOADFE");
+        trie2.put("GOADFE");
+        
+        
+        Iterator<java.util.Map.Entry<String, Integer>> iterator = trie2.iterator("G");
+        while (iterator.hasNext()) {
+            System.out.println(iterator.next());
+        }
+   
     }
     
     public static String[] tenWordsWithMaxFrequency (Trie trie) {
@@ -69,10 +92,10 @@ public class Main {
     }
     
     public static String prefixLength2HightestFrequency (Trie trie) {
-        return "ke";
+        return "";
     }
     
     public static char mostCommonFirstLetter (Trie trie) {
-        return 'f';
+        return ' ';
     }
 }
