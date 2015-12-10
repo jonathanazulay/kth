@@ -34,8 +34,8 @@ public class Main {
             if (lastOfLine.endsWith(".")) {
                 words[words.length - 1] = lastOfLine.substring(0, lastOfLine.length() - 1);
             }
-               
-            
+
+
             for (String word : words) {
                 String word2 = word.replaceAll("\"|\\(|\\)", "");
 
@@ -48,24 +48,24 @@ public class Main {
             }
         }
         System.out.println("\nAdded all words to trie in " + sw.elapsedTime() + " seconds \n");
-        
+
         //Perform analysis
         System.out.println("1) What are the 10 words with the highest frequency?");
         System.out.println(Arrays.toString(minMaxFrequency(trie, true)) + "\n");
-        
+
         System.out.println("2) What are the 10 words with the lowest frequency?");
         System.out.println(Arrays.toString(minMaxFrequency(trie, false)) + "\n");
-        
+
         System.out.println("3) Which prefix of length 2 has the highest frequency?");
         System.out.println(prefixLengthHighestFrequency(trie, 2) + "\n");
-        
+
         System.out.println("4) What is the letter that the most different words start with? (Not frequency this time.)");
         System.out.println(mostCommonFirstLetter(trie) + "\n");
     }
-    
+
     public static Entry[] minMaxFrequency (Trie trie, boolean max) {
         final int reverser = max == true ? 1 : -1;
-        
+
         PriorityQueue<Entry<String, Integer>> pq = new PriorityQueue(new Comparator() {
             @Override
             public int compare(Object o1, Object o2) {
@@ -76,32 +76,32 @@ public class Main {
                 return 0;
             }
         });
-        
+
         Iterator<java.util.Map.Entry<String, Integer>> iterator = trie.iterator("");
         while (iterator.hasNext()) {
             pq.add(iterator.next());
         }
-        
+
         Entry[] res = new Entry[10];
         for (int i = 0; i < res.length; i += 1) {
             res[i] = pq.poll();
         }
-        
+
         return res;
     }
-    
+
     public static String prefixLengthHighestFrequency (Trie trie, int length) {
         Iterator<java.util.Map.Entry<String, Integer>> iterator = trie.iterator("");
-        
+
         String maxPrefix = null;
         int maxCount = 0;
-        
+
         String currPrefix = null;
         int currentCount = 0;
-        
+
         while (iterator.hasNext()) {
             Entry<String, Integer> word = iterator.next();
-            
+
             if (word.getKey().length() >= length) {
                 String comparePrefix = word.getKey().substring(0, length);
                 if(!comparePrefix.equals(currPrefix)) {
@@ -115,26 +115,26 @@ public class Main {
                 currentCount += word.getValue();
             }
         }
-        
+
         if (currentCount > maxCount) {
             maxPrefix = currPrefix;
         }
-        
+
         return maxPrefix;
     }
-    
+
     public static String mostCommonFirstLetter (Trie trie) {
         Iterator<java.util.Map.Entry<String, Integer>> iterator = trie.iterator("");
-        
+
         String maxPrefix = null;
         int maxCount = 0;
-        
+
         String currPrefix = null;
         int currentCount = 0;
-        
+
         while (iterator.hasNext()) {
             Entry<String, Integer> word = iterator.next();
-            
+
             if (word.getKey().length() >= 1) {
                 String comparePrefix = word.getKey().substring(0, 1);
                 if(!comparePrefix.equals(currPrefix)) {
@@ -148,11 +148,11 @@ public class Main {
                 currentCount += 1;
             }
         }
-        
+
         if (currentCount > maxCount) {
             maxPrefix = currPrefix;
         }
-        
+
         return maxPrefix;
     }
 }
