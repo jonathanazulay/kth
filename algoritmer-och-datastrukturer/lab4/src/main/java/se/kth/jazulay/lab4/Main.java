@@ -15,7 +15,7 @@ public class Main {
     public static void main(String[] args) {
         Trie trie = new Trie();
 
-        URL url = ClassLoader.getSystemResource("kap1.txt");
+        URL url = ClassLoader.getSystemResource("allChapters.txt");
 
         if (url != null) {
             System.out.println("Reading from: " + url);
@@ -43,7 +43,7 @@ public class Main {
                     continue;
                 }
 
-                System.out.println(word2);
+                //System.out.println(word2);
                 trie.put(word2.toLowerCase());
             }
         }
