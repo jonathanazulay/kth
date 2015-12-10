@@ -171,7 +171,7 @@ public class Trie {
                 }
 
                 if (trie.value > 0 && isMovingDown) {
-                    // If this child has a value and we was moving down in trie
+                    // If this child has a value and we were moving down in trie
                     // return the value
                     length -= 1;
                     return new SimpleEntry(sb.toString(), trie.value);
