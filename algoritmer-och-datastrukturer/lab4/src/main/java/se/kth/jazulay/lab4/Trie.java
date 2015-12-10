@@ -132,6 +132,7 @@ public class Trie {
                 Trie startAt = Trie.this.getChildTrie(k);
                 length = startAt.distinct("");
                 isMovingDown = true;
+                popChar();
                 
                 if (startAt.value > 0 || startAt.childCount > 0) {
                     this.positionInTrie.push(0);
