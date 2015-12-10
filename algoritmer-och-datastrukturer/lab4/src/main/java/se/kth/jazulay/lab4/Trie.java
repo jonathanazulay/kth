@@ -11,7 +11,7 @@ public class Trie {
     private int childCount = 0;
 
     public Trie () {
-        this.c = ' ';
+        this.c = 0;
     }
     
     public Trie (char c) {
@@ -154,7 +154,10 @@ public class Trie {
                 int childsLeft = trie.childCount - pos;
                 
                 if (isMovingDown) {
-                    pushChar(trie.c);
+                    if (trie.c != 0) {
+                        pushChar(trie.c);
+                    }
+                    
                 } else {
                     popChar();
                 }

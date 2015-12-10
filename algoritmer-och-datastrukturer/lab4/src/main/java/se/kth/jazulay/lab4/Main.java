@@ -42,7 +42,7 @@ public class Main {
                 }
 
                 System.out.println(word2);
-                trie.put(word2);
+                trie.put(word2.toLowerCase());
             }
         }
         System.out.println("\nAdded all words to trie in " + sw.elapsedTime() + " seconds \n");
@@ -60,26 +60,14 @@ public class Main {
         System.out.println("4) What is the letter that the most different words start with? (Not frequency this time.)");
         System.out.println(mostCommonFirstLetter(trie) + "\n");
         
-        
-        Trie trie2 = new Trie();
-        trie2.put("HEJ");
-        trie2.put("HEJ");
-        trie2.put("HE");
-        trie2.put("HEG");
-        trie2.put("GOA");
-        trie2.put("GOAD");
-        trie2.put("GOADE");
-        trie2.put("GOADF");
-        trie2.put("GOADFE");
-        trie2.put("GOADFE");
-        trie2.put("GOADFE");
-        trie2.put("GOADFE");
-        
-        
-        Iterator<java.util.Map.Entry<String, Integer>> iterator = trie2.iterator("G");
+        int sum = 0;
+        Iterator<java.util.Map.Entry<String, Integer>> iterator = trie.iterator("");
         while (iterator.hasNext()) {
-            System.out.println(iterator.next());
+            Entry<String, Integer> val = iterator.next();
+            System.out.println(val);
+            sum += val.getValue();
         }
+        System.out.println(sum);
    
     }
     
