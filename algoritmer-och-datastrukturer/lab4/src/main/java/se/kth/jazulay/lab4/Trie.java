@@ -123,7 +123,6 @@ public class Trie {
             int length;
             java.util.Stack<Trie> currentTrie;
             java.util.Stack<Integer> positionInTrie;
-            boolean isMovingDown;
             
             {
                 this.currentTrie = new java.util.Stack<>();
@@ -131,7 +130,6 @@ public class Trie {
                 
                 Trie startAt = Trie.this.getChildTrie(k);
                 length = startAt.distinct("");
-                isMovingDown = true;
                 popChar();
                 
                 if (startAt.value > 0 || startAt.childCount > 0) {
@@ -150,8 +148,7 @@ public class Trie {
                 // Pop three and position to process now
                 int pos = this.positionInTrie.pop();
                 Trie trie = this.currentTrie.pop();
-
-                boolean wasMovingDown = isMovingDown;
+                boolean isMovingDown = pos == 0;
                 int childsLeft = trie.childCount - pos;
                 
                 if (isMovingDown) {
@@ -170,12 +167,10 @@ public class Trie {
                     // Visit next child next iteration, starting at index zero
                     this.positionInTrie.push(0);
                     this.currentTrie.push(trie.getChild(pos));
-                    isMovingDown = true;
-                } else {
-                    isMovingDown = false;
+    
                 }
 
-                if (trie.value > 0 && wasMovingDown) {
+                if (trie.value > 0 && isMovingDown) {
                     // If this child has a value and we was moving down in trie
                     // return the value
                     length -= 1;
