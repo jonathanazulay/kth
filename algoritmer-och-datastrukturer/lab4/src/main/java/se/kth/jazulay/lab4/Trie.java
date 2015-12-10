@@ -193,6 +193,7 @@ public class Trie {
     }
 
     private int getArrayPos (char c) {
+        if (c > 127) { return 0; }
         return c;
     }
 
