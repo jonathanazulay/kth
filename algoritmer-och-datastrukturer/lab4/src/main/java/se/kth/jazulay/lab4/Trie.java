@@ -118,8 +118,9 @@ public class Trie {
     
     public Iterator<java.util.Map.Entry<String, Integer>> iterator (final String k) {        
         return new Iterator<Map.Entry<String, Integer>>() {
-            
+   
             StringBuilder sb = new StringBuilder(k);
+            int length;
             java.util.Stack<Trie> currentTrie;
             java.util.Stack<Integer> positionInTrie;
             boolean isMovingDown;
@@ -128,9 +129,9 @@ public class Trie {
                 this.currentTrie = new java.util.Stack<>();
                 this.positionInTrie = new java.util.Stack<>();
                 
-                isMovingDown = true;
-                
                 Trie startAt = Trie.this.getChildTrie(k);
+                length = startAt.distinct("");
+                isMovingDown = true;
                 
                 if (startAt.value > 0 || startAt.childCount > 0) {
                     this.positionInTrie.push(0);
@@ -140,7 +141,7 @@ public class Trie {
    
             @Override
             public boolean hasNext() {
-                return currentTrie.size() > 0;
+                return length > 0;
             }
 
             @Override
@@ -148,23 +149,20 @@ public class Trie {
                 // Pop three and position to process now
                 int pos = this.positionInTrie.pop();
                 Trie trie = this.currentTrie.pop();
-                
+
                 boolean wasMovingDown = isMovingDown;
                 int childsLeft = trie.childCount - pos;
-
-                if (childsLeft < 0) {
-                    // No elements of interest here, process next stack element
-                    return this.next();
+                
+                if (isMovingDown) {
+                    pushChar(trie.c);
+                } else {
+                    popChar();
                 }
                 
-                if (childsLeft > 1) {
-                    // There's more tries here to get back to later, push current
-                    // trie and position + 1
-                    this.positionInTrie.push(pos + 1);
-                    this.currentTrie.push(trie);
-                }   
-                
                 if (childsLeft > 0) { 
+                    // To be able to climb up trie again
+                    this.positionInTrie.push(pos + 1);
+                    this.currentTrie.push(trie);   
                     // Visit next child next iteration, starting at index zero
                     this.positionInTrie.push(0);
                     this.currentTrie.push(trie.getChild(pos));
@@ -176,16 +174,18 @@ public class Trie {
                 if (trie.value > 0 && wasMovingDown) {
                     // If this child has a value and we was moving down in trie
                     // return the value
+                    length -= 1;
                     return new SimpleEntry(sb.toString(), trie.value);
                 } else {
                     // Otherwise process next element in stack
                     return this.next();
+                    
                 }
             }
             
             private void popChar () {
                 if (sb.length() <= 0) { return; }
-                sb.setLength(sb.length());
+                sb.setLength(sb.length() -1);
             }
             
             private void pushChar (char c) {
