@@ -178,7 +178,6 @@ public class Trie {
                 } else {
                     // Otherwise process next element in stack
                     return this.next();
-                    
                 }
             }
             
