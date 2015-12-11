@@ -57,6 +57,28 @@ public class Trie {
     }
 
     /**
+     * Returns associated trie element for a key
+     * @param k key
+     * @return associated trie
+     */
+    public Trie getChildTrie (String k) {
+        if (k.length() == 0) {
+            return this;
+        }
+
+        char first = k.charAt(0);
+        int childPos = this.getArrayPos(first);
+        Trie child = children[childPos];
+
+        if (child == null) {
+            return null;
+        }
+
+        String rest = k.substring(1);
+        return child.getChildTrie(rest);
+    }
+
+    /**
      * Calculates sum of all associated values
      * @param k prefix to start at
      * @return sum of all associated values
@@ -195,22 +217,5 @@ public class Trie {
     private int getArrayPos (char c) {
         if (c > 127) { return 0; }
         return c;
-    }
-
-    public Trie getChildTrie (String k) {
-        if (k.length() == 0) {
-            return this;
-        }
-
-        char first = k.charAt(0);
-        int childPos = this.getArrayPos(first);
-        Trie child = children[childPos];
-
-        if (child == null) {
-            return null;
-        }
-
-        String rest = k.substring(1);
-        return child.getChildTrie(rest);
     }
 }
