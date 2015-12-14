@@ -14,11 +14,7 @@ public class ShortestPath {
     public ShortestPath (Graph g) {
         this.graph = g;
     }
-
-    public int shortestEW () {
-        return 0;
-    }
-
+    
     public Vertex[] shortest (String from, String to) {
         // Do a BFS, start at the 'from' node. Store all paths into pathTo.
         Vertex vfrom = this.getVertex(from);
