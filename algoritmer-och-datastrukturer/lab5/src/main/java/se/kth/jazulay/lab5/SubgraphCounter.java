@@ -1,17 +1,8 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package se.kth.jazulay.lab5;
 
 import se.kth.id1020.Edge;
 import se.kth.id1020.Graph;
 
-/**
- *
- * @author jonathanazulay
- */
 public class SubgraphCounter {
 
     Graph graph;
