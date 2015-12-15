@@ -28,15 +28,15 @@ public class ShortestPath {
 
         while (!queue.isEmpty()) {
             int vertex = queue.poll();
-            visited[vertex] = true;
 
             for (Edge edge : this.graph.adj(vertex)) {
                 if (!visited[edge.to]) {
                     queue.add(edge.to);
+                    visited[edge.to] = true;
                     pathTo[edge.to] = vertex;
                 }
-            }
 
+            }
         }
 
         // Find the shortest path by following the path starting at to
