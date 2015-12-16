@@ -12,26 +12,16 @@ public class SubgraphCounter {
     }
 
     public int count () {
-        boolean[] visited = DFS(0);
-        int count = 1;
-        int unvisitedNode = indexOfFirstUnvisited(visited);
-        while (unvisitedNode != -1) {
-            DFS(unvisitedNode, visited);
-            count += 1;
-            unvisitedNode = indexOfFirstUnvisited(visited);
+        boolean[] visited = new boolean[this.graph.numberOfVertices()];
+        int count = 0;
+
+        for (int i = 0; i < visited.length; i += 1) {
+            if (!visited[i]) {
+                DFS(i, visited);
+                count += 1;
+            }
         }
         return count;
-    }
-
-    private int indexOfFirstUnvisited(boolean[] visits) {
-        int i = 0;
-        for (boolean visit : visits) {
-            if (visit == false) {
-                return i;
-            }
-            i += 1;
-        }
-        return -1;
     }
 
     private boolean[] DFS(int startVertex) {
