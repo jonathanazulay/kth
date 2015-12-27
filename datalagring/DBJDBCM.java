@@ -6,7 +6,7 @@
  **
  ** There is no error management in this program.
  ** Instead an exception is thrown. Ideally all exceptions
- ** should be caught and managed appropriately. But this 
+ ** should be caught and managed appropriately. But this
  ** program's goal is only to illustrate the basic JDBC classes.
  **
  ** Last modified by nikos on 2015-10-07
@@ -55,7 +55,7 @@ public class DBJDBCM
         Statement stmt;
 
         // Set the SQL statement into the query variable
-        query = "SELECT stad, COUNT(*) AS antal FROM person GROUP BY stad";
+        query = "SELECT DISTINCT marke FROM bil";
 
         // Create a statement associated to the connection con.
         // The new statement is placed in the variable stmt.
@@ -65,14 +65,14 @@ public class DBJDBCM
         // and store the result in the variable rs.
         rs = stmt.executeQuery(query);
 
-        System.out.println("Resultatet (Städer och antal personer):");
+        System.out.println("Resultatet (alla bilmärken): ");
 
         // Loop through the result set and print the results.
         // The method next() returns false when there are no more rows.
         while (rs.next())
         {
-            System.out.print("Stad: " + rs.getString("stad"));
-            System.out.println(" Antal personer: " + rs.getInt("antal"));
+            System.out.print(rs.getString("marke"));
+            System.out.println();
         }
 
         // Close the variable stmt and release all resources bound to it
@@ -95,13 +95,13 @@ public class DBJDBCM
         // Create a BufferedReader in order to allow the user to provide input.
         // java.io.BufferedReader in = new java.io.BufferedReader(new java.io.InputStreamReader(System.in));
 
-        // Ask the user to specify a value for Märke.
-        System.out.print("Ange ett märke: ");
+        // Ask the user to specify a value for city.
+        System.out.print("Ange en stad: ");
         // Retrieve the value and place it in the variable markeparam.
         markeparam = in.nextLine();
 
         // Set the SQL statement into the query variable
-        query = "SELECT fnamn, enamn, stad FROM person WHERE id IN (SELECT agare FROM bil WHERE marke = ?)";
+        query = "SELECT regnr, marke, farg FROM bil WHERE agare IN (SELECT id FROM person WHERE stad = ?)";
 
         // Create a statement associated to the connection and the query.
         // The new statement is placed in the variable stmt.
@@ -116,13 +116,13 @@ public class DBJDBCM
         // and store the result in the variable rs.
         rs = stmt.executeQuery();
 
-        System.out.println("Resultatet (Personer som äger " + markeparam + "):");
+        System.out.println("Resultatet (Bilar med ägare i " + markeparam + "):");
 
         // Loop through the result set and print the results.
         // The method next() returns false when there are no more rows.
         while (rs.next())
         {
-            System.out.println(rs.getString("fnamn") + " " + rs.getString("enamn") + " " + rs.getString("stad"));
+            System.out.println(rs.getString("regnr") + " " + rs.getString("marke") + " " + rs.getString("farg"));
         }
 
         // Close the variable stmt and release all resources bound to it
@@ -130,44 +130,38 @@ public class DBJDBCM
         stmt.close();
     }
 
-    public void insert() throws Exception
+    public void update() throws Exception
     {
         // Local variables
         String query;
         PreparedStatement stmt;
-        String fnamnparam;
-        String enamnparam;
-        String stadparam;
+        String regnrParam;
+        String newColorParam;
 
         // Create a Scanner in order to allow the user to provide input.
         java.util.Scanner in = new java.util.Scanner(System.in);
 
         // Ask the user to specify a value for förnamn.
-        System.out.print("Ange förnamnet: ");
-        // Retrieve the value and place it in the variable fnamnparam.
-        fnamnparam = in.nextLine();
+        System.out.print("Ange regnr att uppdatera: ");
+        // Retrieve the value and place it in the variable regnrParam.
+        regnrParam = in.nextLine();
         // Ask the user to specify a value for efternamn.
-        System.out.print("Ange efternamnet: ");
-        // Retrieve the value and place it in the variable enamnparam.
-        enamnparam = in.nextLine();
-        // Ask the user to specify a value for stad.
-        System.out.print("Ange staden: ");
-        // Retrieve the value and place it in the variable stadparam.
-        stadparam = in.nextLine();
+        System.out.print("Ange nya färgen: ");
+        // Retrieve the value and place it in the variable newColorParam.
+        newColorParam = in.nextLine();
 
         // Set the SQL statement into the query variable
-        query = "INSERT INTO person (fnamn, enamn, stad) VALUES (?, ?, ?)";
+        query = "UPDATE bil SET farg = ? WHERE regnr = ?";
 
         // Create a statement associated to the connection and the query.
         // The new statement is placed in the variable stmt.
         stmt = con.prepareStatement(query);
 
         // Provide the values for the ?'s in the SQL statement.
-        // The value of the variable fnamnparam is the first,
-        // enamnparam is second and stadparam is third.
-        stmt.setString(1, fnamnparam);
-        stmt.setString(2, enamnparam);
-        stmt.setString(3, stadparam);
+        // The value of the variable regnrParam is the first,
+        // newColorParam is second and stadparam is third.
+        stmt.setString(1, newColorParam);
+        stmt.setString(2, regnrParam);
 
         // Execute the SQL statement that is prepared in the variable stmt
         stmt.executeUpdate();
@@ -188,8 +182,8 @@ public class DBJDBCM
         t.simpleselect();
 		  System.out.println("-------- parameterizedselect() ---------");
         t.parameterizedselect();
-		  System.out.println("-------- insert() ---------");
-        t.insert();
+		  System.out.println("-------- update() ---------");
+        t.update();
 
         // Commit the changes made to the database through this connection.
         con.commit();
