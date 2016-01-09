@@ -10,7 +10,7 @@ import se.kth.id1020.util.Word;
 
 public class TinySearchEngine implements TinySearchEngineBase {
 
-    java.util.HashMap<Word, Attributes> words;
+    HashMap<Word, Attributes> words;
     QueryParser parser = new QueryParser();
 
     public TinySearchEngine() {
