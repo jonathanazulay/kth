@@ -43,7 +43,7 @@ public class QueryParser {
 
         @Override
         public String toString() {
-            return this.getInfix() + "ORDER BY BLA BLA";
+            return "Query" + this.getInfix() + " ORDER BY BLA BLA";
         }
     }
 
@@ -81,7 +81,7 @@ public class QueryParser {
         public String toString() {
             if (this.value != null) { return this.value; }
             else {
-                return '(' + this.left.toString() + this.operator.getChar() + this.right.toString() + ')';
+                return '(' + this.left.toString() + ' ' + this.operator.getChar() + ' ' + this.right.toString() + ')';
             }
         }
     }
