@@ -4,7 +4,18 @@ import java.util.Stack;
 
 public class QueryParser {
     public enum Operator {
-        PLUS, OR, MINUS
+        PLUS, OR, MINUS;
+
+        public char getChar () {
+            if (this == Operator.MINUS) {
+                return '-';
+            } else if (this == Operator.OR) {
+                return '|';
+            } else if (this == Operator.PLUS) {
+                return '+';
+            }
+            return ' ';
+        }
     }
 
     public class Query {
@@ -19,7 +30,7 @@ public class QueryParser {
         }
 
         public String getInfix () {
-            return "";
+            return this.expression.toString();
         }
 
         public String getProperty () {
@@ -28,6 +39,11 @@ public class QueryParser {
 
         public String getDirection () {
             return this.direction;
+        }
+
+        @Override
+        public String toString() {
+            return this.getInfix() + "ORDER BY BLA BLA";
         }
     }
 
@@ -59,6 +75,14 @@ public class QueryParser {
             if (this.left == null) { this.left = exp; }
             else if (this.right == null) { this.right = exp; }
             else { throw new Error("all operands has already been set"); }
+        }
+
+        @Override
+        public String toString() {
+            if (this.value != null) { return this.value; }
+            else {
+                return '(' + this.left.toString() + this.operator.getChar() + this.right.toString() + ')';
+            }
         }
     }
 
