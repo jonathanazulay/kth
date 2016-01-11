@@ -90,6 +90,11 @@ public class RecursiveQueryParser {
         public String toString() {
             if (this.value != null) { return this.value; }
             else {
+                // Postfix
+                //return this.left.toString() + " " + this.right.toString() + " " + this.operator.get();
+                // Prefix
+                //return "" + this.operator.get() + " " + this.left.toString() + " " + this.right.toString();
+                // Infix
                 return '(' + this.left.toString() + ' ' + this.operator.get() + ' ' + this.right.toString() + ')';
             }
         }

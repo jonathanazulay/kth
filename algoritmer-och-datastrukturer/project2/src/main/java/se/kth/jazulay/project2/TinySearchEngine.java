@@ -1,5 +1,6 @@
 package se.kth.jazulay.project2;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import se.kth.id1020.TinySearchEngineBase;
