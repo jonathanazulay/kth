@@ -96,17 +96,17 @@ public class RecursiveQueryParser {
 
         public String infix () {
             if (this.value != null) { return this.value; }
-            return '(' + this.left.toString() + ' ' + this.operator.get() + ' ' + this.right.toString() + ')';
+            return '(' + this.left.infix()+ ' ' + this.operator.get() + ' ' + this.right.infix() + ')';
         }
 
         public String prefix () {
             if (this.value != null) { return this.value; }
-            return "" + this.operator.get() + " " + this.left.toString() + " " + this.right.toString();
+            return "" + this.operator.get() + " " + this.left.prefix() + " " + this.right.prefix();
         }
 
         public String postfix () {
             if (this.value != null) { return this.value; }
-            return this.left.toString() + " " + this.right.toString() + " " + this.operator.get();
+            return this.left.postfix()+ " " + this.right.postfix()+ " " + this.operator.get();
         }
 
         @Override
