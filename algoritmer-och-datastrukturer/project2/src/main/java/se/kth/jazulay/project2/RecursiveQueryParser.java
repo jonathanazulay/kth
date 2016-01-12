@@ -4,17 +4,6 @@ public class RecursiveQueryParser {
     public enum Operator {
         PLUS, OR, MINUS;
 
-        public char get () {
-            if (this == Operator.MINUS) {
-                return '-';
-            } else if (this == Operator.OR) {
-                return '|';
-            } else if (this == Operator.PLUS) {
-                return '+';
-            }
-            return 0;
-        }
-
         public static Operator get (char c) {
             if (c == '-') {
                 return Operator.MINUS;
@@ -22,6 +11,18 @@ public class RecursiveQueryParser {
                 return Operator.OR;
             } else if (c == '+') {
                 return Operator.PLUS;
+            }
+            return null;
+        }
+
+        @Override
+        public String toString () {
+            if (this == Operator.MINUS) {
+                return "-";
+            } else if (this == Operator.OR) {
+                return "|";
+            } else if (this == Operator.PLUS) {
+                return "+";
             }
             return null;
         }
@@ -96,17 +97,17 @@ public class RecursiveQueryParser {
 
         public String infix () {
             if (this.value != null) { return this.value; }
-            return '(' + this.left.infix()+ ' ' + this.operator.get() + ' ' + this.right.infix() + ')';
+            return '(' + this.left.infix()+ ' ' + this.operator + ' ' + this.right.infix() + ')';
         }
 
         public String prefix () {
             if (this.value != null) { return this.value; }
-            return "" + this.operator.get() + " " + this.left.prefix() + " " + this.right.prefix();
+            return "" + this.operator + " " + this.left.prefix() + " " + this.right.prefix();
         }
 
         public String postfix () {
             if (this.value != null) { return this.value; }
-            return this.left.postfix()+ " " + this.right.postfix()+ " " + this.operator.get();
+            return this.left.postfix()+ " " + this.right.postfix()+ " " + this.operator;
         }
 
         @Override
