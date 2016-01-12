@@ -38,10 +38,6 @@ public class RecursiveQueryParser {
             this.direction = direction;
         }
 
-        public String getInfix () {
-            return this.expression.toString();
-        }
-
         public String getProperty () {
             return this.property;
         }
@@ -50,9 +46,21 @@ public class RecursiveQueryParser {
             return this.direction;
         }
 
+        public String infix () {
+            return this.expression.infix();
+        }
+
+        public String prefix () {
+            return this.expression.prefix();
+        }
+
+        public String postfix () {
+            return this.expression.postfix();
+        }
+
         @Override
         public String toString() {
-            return "Query" + this.getInfix() + " ORDER BY BLA BLA";
+            return this.infix()+ " ORDER BY BLA BLA";
         }
     }
 
@@ -86,17 +94,24 @@ public class RecursiveQueryParser {
             else { throw new Error("all operands has already been set"); }
         }
 
+        public String infix () {
+            if (this.value != null) { return this.value; }
+            return '(' + this.left.toString() + ' ' + this.operator.get() + ' ' + this.right.toString() + ')';
+        }
+
+        public String prefix () {
+            if (this.value != null) { return this.value; }
+            return "" + this.operator.get() + " " + this.left.toString() + " " + this.right.toString();
+        }
+
+        public String postfix () {
+            if (this.value != null) { return this.value; }
+            return this.left.toString() + " " + this.right.toString() + " " + this.operator.get();
+        }
+
         @Override
         public String toString() {
-            if (this.value != null) { return this.value; }
-            else {
-                // Postfix
-                //return this.left.toString() + " " + this.right.toString() + " " + this.operator.get();
-                // Prefix
-                //return "" + this.operator.get() + " " + this.left.toString() + " " + this.right.toString();
-                // Infix
-                return '(' + this.left.toString() + ' ' + this.operator.get() + ' ' + this.right.toString() + ')';
-            }
+            return this.infix();
         }
     }
 
