@@ -28,6 +28,63 @@ public class RecursiveQueryParser {
         }
     }
 
+    private class UnparsedExpression {
+        private int pos = 0;
+        private String expression;
+
+        public UnparsedExpression (String expression) {
+            this.expression = expression;
+            this.trim();
+        }
+
+        private void trim () {
+            while (!this.reachedEnd() && this.expression.charAt(pos) == ' ') {
+                pos += 1;
+            }
+        }
+
+        private boolean isSpace () {
+            if (this.reachedEnd()) { return false; }
+            return this.expression.charAt(pos) == ' ';
+        }
+
+        public boolean isOperand () {
+            if (this.reachedEnd()) { return false; }
+            return !this.isOperator() && !this.isSpace();
+        }
+
+        public boolean isOperator () {
+            if (this.reachedEnd()) { return false; }
+            Operator operator = Operator.get(this.expression.charAt(pos));
+            return operator != null;
+        }
+
+        public String parseNextOperand () {
+            if (!this.isOperand()) { return null; }
+            String returnVal = "";
+            while (this.isOperand()) {
+                returnVal += this.expression.charAt(pos);
+                pos += 1;
+            }
+            this.trim();
+            return returnVal;
+        }
+
+        public Operator parseNextOperator () {
+            Operator returnVal = null;
+            if (this.isOperator()) {
+                returnVal = Operator.get(this.expression.charAt(pos));
+                pos += 1;
+                this.trim();
+            }
+            return returnVal;
+        }
+
+        private boolean reachedEnd () {
+            return pos >= this.expression.length();
+        }
+    }
+
     public class Query {
         QueryExpression expression;
         private String property;
@@ -117,45 +174,22 @@ public class RecursiveQueryParser {
     }
 
     public Query parse (String query) {
-        return new Query(this.recursiveParse(new StringBuilder(query)), null, null);
+        return new Query(this.recursiveParse(new UnparsedExpression(query)), null, null);
     }
 
-    private QueryExpression recursiveParse (StringBuilder query) {
-        // Ignore spaces
-        char c;
-        do {
-            c = query.charAt(0);
-            query.delete(0, 1);
-        } while (c == ' ');
-
-        Operator op = Operator.get(c);
-
+    private QueryExpression recursiveParse (UnparsedExpression query) {
         QueryExpression newExp;
-        if (op != null) {
+
+        if (query.isOperator()) {
             newExp = new QueryExpression(
-                op,
+                query.parseNextOperator(),
                 this.recursiveParse(query),
                 this.recursiveParse(query)
             );
         } else {
-            // A word starts here, find next terminator (space)
-            int indexOfFirstSpace = this.indexOfTerminator(query.toString());
-            String word = query.substring(0, indexOfFirstSpace);
-            query.delete(0, indexOfFirstSpace);
-            newExp = new QueryExpression(c + word);
+            newExp = new QueryExpression(query.parseNextOperand());
         }
 
         return newExp;
-    }
-
-    private int indexOfTerminator (String expression) {
-        int indexOfFirstSpace = 0;
-        for (char c : expression.toCharArray()) {
-            if (c == ' ' || c == '-' || c == '|' || c == '+') {
-                return indexOfFirstSpace;
-            }
-            indexOfFirstSpace += 1;
-        }
-        return expression.length();
     }
 }
