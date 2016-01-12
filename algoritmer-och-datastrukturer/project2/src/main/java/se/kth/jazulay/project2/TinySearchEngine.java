@@ -14,12 +14,17 @@ import se.kth.id1020.util.Sentence;
 import se.kth.id1020.util.Word;
 
 public class TinySearchEngine implements TinySearchEngineBase {
-
     HashMap<String, Set<Document>> wordOccurances;
+    HashMap<Document, Integer> wordCount;
+    HashMap<String, HashMap<Document, Integer>> occurrenceCount;
+
     RecursiveQueryParser parser = new RecursiveQueryParser();
+
 
     public TinySearchEngine() {
         this.wordOccurances = new HashMap<>();
+        this.wordCount = new HashMap<>();
+        this.occurrenceCount = new HashMap<>();
     }
 
     @Override
@@ -37,17 +42,6 @@ public class TinySearchEngine implements TinySearchEngineBase {
         for (Word w : sntnc.getWords()) {
             this.putWord(w, atrbts);
         }
-    }
-
-    private void putWord (Word w, Attributes atrbts) {
-        Set<Document> occurrences = this.wordOccurances.get(w.word);
-
-        if (occurrences == null) {
-            occurrences = new HashSet<>();
-            this.wordOccurances.put(w.word, occurrences);
-        }
-
-        occurrences.add(atrbts.document);
     }
 
     @Override
@@ -72,6 +66,52 @@ public class TinySearchEngine implements TinySearchEngineBase {
     @Override
     public String infix(String string) {
         return parser.parse(string).toString();
+    }
+
+    private void putWord (Word w, Attributes atrbts) {
+        // Increase number of occurrences of this word in this document, used for relevance calc
+        if (this.occurrenceCount.get(w.word) == null) {
+            this.occurrenceCount.put(w.word, new HashMap<Document, Integer>());
+        }
+
+        if (this.occurrenceCount.get(w.word).get(atrbts.document) == null) {
+            this.occurrenceCount.get(w.word).put(atrbts.document, 1);
+        } else {
+            this.occurrenceCount.get(w.word).put(atrbts.document, this.occurrenceCount.get(w.word).get(atrbts.document) + 1);
+        }
+
+        // Increase number of word this document, used for relevance calc
+        Integer nWords = this.wordCount.get(atrbts.document);
+        if (nWords == null) {
+            nWords = 1;
+        } else {
+            nWords += 1;
+        }
+        this.wordCount.put(atrbts.document, nWords);
+
+        // Add this document to the word map
+        Set<Document> occurrences = this.wordOccurances.get(w.word);
+        if (occurrences == null) {
+            occurrences = new HashSet<>();
+            this.wordOccurances.put(w.word, occurrences);
+        }
+        occurrences.add(atrbts.document);
+    }
+
+    private int numberOfOccurrencesInDocument (String word, Document doc) {
+        return this.occurrenceCount.get(word).get(doc);
+    }
+
+    private int numberOfDocumentsContainingWord (String word) {
+        return this.wordOccurances.get(word).size();
+    }
+
+    private int numberOfDocuments () {
+        return this.wordCount.size();
+    }
+
+    private int numberOfWords (Document in) {
+        return this.wordCount.get(in);
     }
 
     private Set<Document> find (String term) {
