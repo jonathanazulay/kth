@@ -85,6 +85,31 @@ public class TinySearchEngine implements TinySearchEngineBase {
         return result;
     }
 
+    private Set<Document> evaluate (QueryExpression qe) {
+        if (qe.value != null) { return this.find(qe.value); }
+        else {
+            switch (qe.operator) {
+                case MINUS:
+                    return this.difference(
+                        this.evaluate(qe.left),
+                        this.evaluate(qe.right)
+                    );
+                case PLUS:
+                    return this.intersection(
+                        this.evaluate(qe.left),
+                        this.evaluate(qe.right)
+                    );
+                case OR:
+                    return this.union(
+                        this.evaluate(qe.left),
+                        this.evaluate(qe.right)
+                    );
+                default:
+                    return new HashSet<>();
+            }
+        }
+    }
+
     private Set<Document> intersection (Set<Document> list1, Set<Document> list2) {
         Set<Document> result = new HashSet<>();
 
@@ -117,30 +142,5 @@ public class TinySearchEngine implements TinySearchEngineBase {
         }
 
         return result;
-    }
-
-    private Set<Document> evaluate (QueryExpression qe) {
-        if (qe.value != null) { return this.find(qe.value); }
-        else {
-            switch (qe.operator) {
-                case MINUS:
-                    return this.difference(
-                        this.evaluate(qe.left),
-                        this.evaluate(qe.right)
-                    );
-                case PLUS:
-                    return this.intersection(
-                        this.evaluate(qe.left),
-                        this.evaluate(qe.right)
-                    );
-                case OR:
-                    return this.union(
-                        this.evaluate(qe.left),
-                        this.evaluate(qe.right)
-                    );
-                default:
-                    return new HashSet<>();
-            }
-        }
     }
 }
