@@ -12,7 +12,6 @@ import se.kth.id1020.util.Attributes;
 import se.kth.id1020.util.Document;
 import se.kth.id1020.util.Sentence;
 import se.kth.id1020.util.Word;
-import se.kth.jazulay.project2.RecursiveQueryParser.Query;
 
 public class TinySearchEngine implements TinySearchEngineBase {
 
