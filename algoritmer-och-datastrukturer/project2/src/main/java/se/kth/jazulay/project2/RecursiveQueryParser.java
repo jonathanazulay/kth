@@ -37,17 +37,6 @@ public class RecursiveQueryParser {
             this.trim();
         }
 
-        private void trim () {
-            while (!this.reachedEnd() && this.expression.charAt(pos) == ' ') {
-                pos += 1;
-            }
-        }
-
-        private boolean isSpace () {
-            if (this.reachedEnd()) { return false; }
-            return this.expression.charAt(pos) == ' ';
-        }
-
         public boolean isOperand () {
             if (this.reachedEnd()) { return false; }
             return !this.isOperator() && !this.isSpace();
@@ -78,6 +67,17 @@ public class RecursiveQueryParser {
                 this.trim();
             }
             return returnVal;
+        }
+
+        private void trim () {
+            while (!this.reachedEnd() && this.expression.charAt(pos) == ' ') {
+                pos += 1;
+            }
+        }
+
+        private boolean isSpace () {
+            if (this.reachedEnd()) { return false; }
+            return this.expression.charAt(pos) == ' ';
         }
 
         private boolean reachedEnd () {
