@@ -54,40 +54,9 @@ public class TinySearchEngine implements TinySearchEngineBase {
     @Override
     public List<Document> search(String string) {
         Query query = parser.parse(string);
-        List<Document> sortedResult = null;
-
-        if (query.expression.value != null) {
-            sortedResult = new ArrayList(
-                this.find(query.expression.value)
-            );
-        } else {
-            switch (query.expression.operator) {
-                case MINUS:
-                    sortedResult = new ArrayList(
-                        this.difference(
-                            this.find(query.expression.left.value),
-                            this.find(query.expression.right.value)
-                        )
-                    );
-                    break;
-                case PLUS:
-                    sortedResult = new ArrayList(
-                        this.intersection(
-                            this.find(query.expression.left.value),
-                            this.find(query.expression.right.value)
-                        )
-                    );
-                    break;
-                case OR:
-                    sortedResult = new ArrayList(
-                        this.union(
-                            this.find(query.expression.left.value),
-                            this.find(query.expression.right.value)
-                        )
-                    );
-                    break;
-            }
-        }
+        List<Document> sortedResult = new ArrayList(
+            this.evaluate(query.expression)
+        );
 
         Collections.sort(sortedResult, new Comparator<Document>() {
             @Override
@@ -149,5 +118,30 @@ public class TinySearchEngine implements TinySearchEngineBase {
         }
 
         return result;
+    }
+
+    private Set<Document> evaluate (QueryExpression qe) {
+        if (qe.value != null) { return this.find(qe.value); }
+        else {
+            switch (qe.operator) {
+                case MINUS:
+                    return this.difference(
+                        this.evaluate(qe.left),
+                        this.evaluate(qe.right)
+                    );
+                case PLUS:
+                    return this.intersection(
+                        this.evaluate(qe.left),
+                        this.evaluate(qe.right)
+                    );
+                case OR:
+                    return this.union(
+                        this.evaluate(qe.left),
+                        this.evaluate(qe.right)
+                    );
+                default:
+                    return new HashSet<>();
+            }
+        }
     }
 }
