@@ -20,7 +20,6 @@ public class TinySearchEngine implements TinySearchEngineBase {
 
     RecursiveQueryParser parser = new RecursiveQueryParser();
 
-
     public TinySearchEngine() {
         this.wordOccurances = new HashMap<>();
         this.wordCount = new HashMap<>();
@@ -46,7 +45,8 @@ public class TinySearchEngine implements TinySearchEngineBase {
 
     @Override
     public List<Document> search(String string) {
-        Query query = parser.parse(string);
+        final Query query = parser.parse(string);
+        
         List<Document> sortedResult = new ArrayList(
             this.evaluate(query.expression)
         );
@@ -60,12 +60,39 @@ public class TinySearchEngine implements TinySearchEngineBase {
             }
         });
 
+        Collections.sort(sortedResult, new Comparator<Document>() {
+            @Override
+            public int compare (Document o1, Document o2) {
+                double relDoc1 = TinySearchEngine.this.tfidf(query.expression, o1);
+                double relDoc2 = TinySearchEngine.this.tfidf(query.expression, o2);
+
+                if (relDoc1 < relDoc2) { return 1; }
+                else if (relDoc1 > relDoc2) { return -1; }
+                else { return 0; }
+            }
+        });
+
         return sortedResult;
     }
 
     @Override
     public String infix(String string) {
         return parser.parse(string).toString();
+    }
+
+    private double tfidf (QueryExpression qe, Document doc) {
+        if (qe.value != null) {
+            return (
+                Math.log10(this.numberOfDocuments() / this.numberOfDocumentsContainingWord(qe.value))
+                + this.numberOfOccurrencesInDocument(qe.value, doc)
+            );
+        } else {
+            if (qe.operator == Operator.MINUS) {
+                return this.tfidf(qe.left, doc);
+            } else {
+                return this.tfidf(qe.left, doc) + this.tfidf(qe.right, doc);
+            }
+        }
     }
 
     private void putWord (Word w, Attributes atrbts) {
@@ -99,19 +126,35 @@ public class TinySearchEngine implements TinySearchEngineBase {
     }
 
     private int numberOfOccurrencesInDocument (String word, Document doc) {
-        return this.occurrenceCount.get(word).get(doc);
+        try {
+            return this.occurrenceCount.get(word).get(doc);
+        } catch (NullPointerException e) {
+            return 0;
+        }
     }
 
     private int numberOfDocumentsContainingWord (String word) {
-        return this.wordOccurances.get(word).size();
+        try {
+            return this.wordOccurances.get(word).size();
+        } catch (NullPointerException e) {
+            return 0;
+        }
     }
 
     private int numberOfDocuments () {
-        return this.wordCount.size();
+        try {
+            return this.wordCount.size();
+        } catch (NullPointerException e) {
+            return 0;
+        }
     }
 
     private int numberOfWords (Document in) {
-        return this.wordCount.get(in);
+        try {
+            return this.wordCount.get(in);
+        } catch (NullPointerException e) {
+            return 0;
+        }
     }
 
     private Set<Document> find (String term) {
