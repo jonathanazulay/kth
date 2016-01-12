@@ -142,16 +142,6 @@ public class RecursiveQueryParser {
             this.value = value;
         }
 
-        public boolean hasAllOperands () {
-            return this.left != null && this.right != null;
-        }
-
-        public void setNextOperand (QueryExpression exp) {
-            if (this.left == null) { this.left = exp; }
-            else if (this.right == null) { this.right = exp; }
-            else { throw new Error("all operands has already been set"); }
-        }
-
         public String infix () {
             if (this.value != null) { return this.value; }
             return '(' + this.left.infix()+ ' ' + this.operator + ' ' + this.right.infix() + ')';
