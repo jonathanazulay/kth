@@ -41,4 +41,33 @@ public class QueryExpression {
     public String toString () {
         return this.infix();
     }
+
+    @Override
+    public int hashCode () {
+        if (this.value != null ) { return this.value.hashCode(); }
+        if (this.operator == Operator.MINUS) { return this.prefix().hashCode(); }
+
+        String leftPrefix = this.left.prefix();
+        String rightPrefix = this.right.prefix();
+
+        int compare = leftPrefix.compareTo(rightPrefix);
+
+        if (compare > 0) {
+            return ("" + this.operator + " " + leftPrefix + " " + rightPrefix).hashCode();
+        } else {
+            return ("" + this.operator + " " + rightPrefix + " " + leftPrefix).hashCode();
+        }
+    }
+
+    @Override
+    public boolean equals (Object obj) {
+        if (obj == null) {
+            return false;
+        }
+        if (getClass() != obj.getClass()) {
+            return false;
+        }
+
+        return this.hashCode() == obj.hashCode();
+    }
 }

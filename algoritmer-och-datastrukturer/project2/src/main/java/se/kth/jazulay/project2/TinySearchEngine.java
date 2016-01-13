@@ -19,6 +19,7 @@ public class TinySearchEngine implements TinySearchEngineBase {
     HashMap<String, HashMap<Document, Integer>> occurrenceCount;
 
     RecursiveQueryParser parser = new RecursiveQueryParser();
+    QueryCache<Set<Document>> cache = new QueryCache<>();
 
     public TinySearchEngine() {
         this.wordOccurances = new HashMap<>();
@@ -46,7 +47,7 @@ public class TinySearchEngine implements TinySearchEngineBase {
     @Override
     public List<Document> search(String string) {
         final Query query = parser.parse(string);
-        
+
         List<Document> sortedResult = new ArrayList(
             this.evaluate(query.expression)
         );
@@ -82,9 +83,12 @@ public class TinySearchEngine implements TinySearchEngineBase {
 
     private double tfidf (QueryExpression qe, Document doc) {
         if (qe.value != null) {
+            if (numberOfDocumentsContainingWord(qe.value) == 0) {
+                return 0;
+            }
             return (
                 Math.log10(this.numberOfDocuments() / this.numberOfDocumentsContainingWord(qe.value))
-                + this.numberOfOccurrencesInDocument(qe.value, doc)
+                + this.numberOfOccurrencesInDocument(qe.value, doc) / this.numberOfWords(doc)
             );
         } else {
             if (qe.operator == Operator.MINUS) {
@@ -171,25 +175,33 @@ public class TinySearchEngine implements TinySearchEngineBase {
     private Set<Document> evaluate (QueryExpression qe) {
         if (qe.value != null) { return this.find(qe.value); }
         else {
+            if (this.cache.hasCachedResult(qe)) {
+                return this.cache.get(qe);
+            }
+
+            Set<Document> result = null;
             switch (qe.operator) {
                 case MINUS:
-                    return this.difference(
+                    result = this.difference(
                         this.evaluate(qe.left),
                         this.evaluate(qe.right)
                     );
+                    break;
                 case PLUS:
-                    return this.intersection(
+                    result = this.intersection(
                         this.evaluate(qe.left),
                         this.evaluate(qe.right)
                     );
+                    break;
                 case OR:
-                    return this.union(
+                    result = this.union(
                         this.evaluate(qe.left),
                         this.evaluate(qe.right)
                     );
-                default:
-                    return new HashSet<>();
+                    break;
             }
+            this.cache.put(qe, result);
+            return result;
         }
     }
 
