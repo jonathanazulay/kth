@@ -87,8 +87,8 @@ public class TinySearchEngine implements TinySearchEngineBase {
                 return 0;
             }
             return (
-                Math.log10(this.numberOfDocuments() / this.numberOfDocumentsContainingWord(qe.value))
-                + this.numberOfOccurrencesInDocument(qe.value, doc) / this.numberOfWords(doc)
+                Math.log10((double)this.numberOfDocuments() / (double)this.numberOfDocumentsContainingWord(qe.value))
+                + (double)this.numberOfOccurrencesInDocument(qe.value, doc) / (double)this.numberOfWords(doc)
             );
         } else {
             if (qe.operator == Operator.MINUS) {
