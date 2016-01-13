@@ -33,6 +33,6 @@ public class Query {
 
     @Override
     public String toString () {
-        return this.infix() + " ORDER BY BLA BLA";
+        return this.infix() + " ORDER BY " + this.property + " " + this.direction;
     }
 }
