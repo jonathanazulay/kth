@@ -2,7 +2,7 @@ package se.kth.jazulay.project2;
 
 public class RecursiveQueryParser {
     public Query parse (String query) {
-        return new Query(this.recursiveParse(new UnparsedExpression(query)), null, null);
+        return new Query(this.recursiveParse(new UnparsedExpression(query)), "relevance", "asc");
     }
 
     private QueryExpression recursiveParse (UnparsedExpression query) {

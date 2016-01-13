@@ -52,26 +52,37 @@ public class TinySearchEngine implements TinySearchEngineBase {
             this.evaluate(query.expression)
         );
 
-        Collections.sort(sortedResult, new Comparator<Document>() {
-            @Override
-            public int compare (Document o1, Document o2) {
-                if (o1.popularity < o2.popularity) { return 1; }
-                else if (o1.popularity > o2.popularity) { return -1; }
-                else { return 0; }
-            }
-        });
+        final int direction;
+        if ("desc".equals(query.getDirection())) {
+            direction = -1;
+        } else {
+            direction = 1;
+        }
 
-        Collections.sort(sortedResult, new Comparator<Document>() {
-            @Override
-            public int compare (Document o1, Document o2) {
-                double relDoc1 = TinySearchEngine.this.tfidf(query.expression, o1);
-                double relDoc2 = TinySearchEngine.this.tfidf(query.expression, o2);
-
-                if (relDoc1 < relDoc2) { return 1; }
-                else if (relDoc1 > relDoc2) { return -1; }
-                else { return 0; }
-            }
-        });
+        switch (query.getProperty()) {
+            case "popularity":
+            Collections.sort(sortedResult, new Comparator<Document>() {
+                @Override
+                public int compare (Document o1, Document o2) {
+                    if (o1.popularity > o2.popularity) { return 1 * direction; }
+                    else if (o1.popularity < o2.popularity) { return -1 * direction; }
+                    else { return 0; }
+                }
+            });
+            break;
+            case "relevance":
+            Collections.sort(sortedResult, new Comparator<Document>() {
+                @Override
+                public int compare (Document o1, Document o2) {
+                    double relDoc1 = TinySearchEngine.this.tfidf(query.expression, o1);
+                    double relDoc2 = TinySearchEngine.this.tfidf(query.expression, o2);
+                    if (relDoc1 > relDoc2) { return 1 * direction; }
+                    else if (relDoc1 < relDoc2) { return -1 * direction; }
+                    else { return 0; }
+                }
+            });
+            break;
+        }
 
         return sortedResult;
     }
