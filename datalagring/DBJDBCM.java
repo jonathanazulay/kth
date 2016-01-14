@@ -49,6 +49,8 @@ public class DBJDBCM
 
     public void simpleselect() throws Exception
     {
+        // CHANGE: Shows all car brands
+
         // Local variables
         String query;
         ResultSet rs;
@@ -82,6 +84,8 @@ public class DBJDBCM
 
     public void parameterizedselect() throws Exception
     {
+        // CHANGE: Shows all cars owned by someone in a city provided by user input
+
         // Local variables
         String query;
         ResultSet rs;
@@ -132,6 +136,8 @@ public class DBJDBCM
 
     public void update() throws Exception
     {
+        // CHANGE: Updates color on car with car identifier
+
         // Local variables
         String query;
         PreparedStatement stmt;
