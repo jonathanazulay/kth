@@ -1,0 +1,154 @@
+<div class="recipe container-fluid">
+    <?php if ($recipe == 1): ?>
+        <h2>Meatballs with mashed potatoes and lingonberry</h2>
+        <div class="row picture-section">
+            <div class="col-sm-8">
+                <img alt="Picture of meatballs" src="<?=base_url()?>static/images/kottbulla.jpg">
+            </div>
+            <div class="col-sm-4">
+                <table class="ingredients">
+                    <tr>
+                        <td class="amount">400 g</td>
+                        <td class="ingredient">Lean pork mince</td>
+                    </tr>
+                    <tr>
+                        <td class="amount">1</td>
+                        <td class="ingredient">egg</td>
+                    </tr>
+                    <tr>
+                        <td class="amount">1</td>
+                        <td class="ingredient">small onion</td>
+                    </tr>
+                    <tr>
+                        <td class="amount">85 g</td>
+                        <td class="ingredient">fresh white breadcrumbs</td>
+                    </tr>
+                    <tr>
+                        <td class="amount">1 tbsp</td>
+                        <td class="ingredient">finely chopped dill</td>
+                    </tr>
+                    <tr>
+                        <td class="amount">1 tbsp</td>
+                        <td class="ingredient">butter</td>
+                    </tr>
+                    <tr>
+                        <td class="amount">2 tbsp</td>
+                        <td class="ingredient">plain lfour</td>
+                    </tr>
+                    <tr>
+                        <td class="amount">400 ml</td>
+                        <td class="ingredient">hot beef stock</td>
+                    </tr>
+                </table>
+            </div>
+        </div>
+        <div class="row instruction-section">
+            <div class="col-sm-8">
+                <h4>Instructions</h4>
+                <ol>
+                    <li>Mix ground beef, egg, onion, breadcrumbs, milk, Worcestershire sauce, salt and freshly ground black pepper to taste together.</li>
+                    <li>Shape mixture by Tablespoonfuls into 1-1/2-inch balls.</li>
+                    <li>Place the meatballs in a lightly greased 13x9x2-inch or 15-1/2x9-1/2x1-inch baking dish.</li>
+                    <li>Bake, uncovered, in a 400 degree Fahrenheit oven until light brown, about 20 to 25 minutes.</li>
+                    <li>Drain off any excess fat.</li>
+                    <li>Use meatballs as desired</li>
+                </ol>
+            </div>
+            <div class="col-sm-3 col-sm-offset-1">
+                <h4>Nutritional value</h4>
+                <ul>
+                    <li>Calories 202</li>
+                    <li>Fat	3.69 g</li>
+                    <li>Carbs 2.12 g</li>
+                    <li>Protein	3.47 g</li>
+                </ul>
+            </div>
+        </div>
+    <?php elseif ($recipe == 2): ?>
+        <h2>Pancakes!</h2>
+        <div class="row picture-section">
+            <div class="col-sm-8">
+                <img alt="Picture of pancakes" src="<?=base_url()?>static/images/pannkaka.jpg">
+            </div>
+            <div class="col-sm-4">
+                <table class="ingredients">
+                    <tr>
+                        <td class="amount">3</td>
+                        <td class="ingredient">eggs</td>
+                    </tr>
+                    <tr>
+                        <td class="amount">2.5 dl</td>
+                        <td class="ingredient">flour</td>
+                    </tr>
+                    <tr>
+                        <td class="amount">6 dl</td>
+                        <td class="ingredient">milk</td>
+                    </tr>
+                    <tr>
+                        <td class="amount">a pinch</td>
+                        <td class="ingredient">salt</td>
+                    </tr>
+                    <tr>
+                        <td class="amount">1 tbsp</td>
+                        <td class="ingredient">butter</td>
+                    </tr>
+                </table>
+            </div>
+        </div>
+        <div class="row instruction-section">
+            <div class="col-sm-8">
+                <h4>Instructions</h4>
+                <ol>
+                    <li>Mix all the dry ingredients</li>
+                    <li>Add the eggs and milk and whisk well</li>
+                    <li>Melt the butter and add it to the mixture</li>
+                    <li>Fry the pancakes on medium heat</li>
+                    <li>Bon appetit!</li>
+                </ol>
+            </div>
+            <div class="col-sm-3 col-sm-offset-1">
+                <h4>Nutritional value</h4>
+                <ul>
+                    <li>Calories 227</li>
+                    <li>Fat	9 g</li>
+                    <li>Carbs 29 g</li>
+                    <li>Protein	7 g</li>
+                </ul>
+            </div>
+        </div>
+    <?php endif; ?>
+    <h3>Comments</h3>
+    <div class="row comment-section">
+
+<form class="col-sm-12" method="post" data-bind="if: loginVM.isLoggedIn">
+    <input data-bind="textInput: recipeId" name="recipeId" type="hidden" />
+    <div class="form-group">
+        <textarea name="comment" class="form-control enter-comment" data-bind="textInput: newComment"></textarea>
+    </div>
+    <div class="form-group">
+        <input data-bind="click: addComment" type="button" value="Write comment" class="btn btn-primary" />
+    </div>
+</form>
+
+<div data-bind="foreach: comments">
+    <div class="comment col-sm-12">
+        <form data-bind="if: editMode" class="comment-edit" method="post">
+            <div class="form-group">
+                <textarea data-bind="textInput: commentContent" name="comment" class="form-control enter-comment"></textarea>
+            </div>
+            <div class="form-group">
+                <input data-bind="click: $parent.saveComment" type="submit" value="Save changes" class="btn btn-primary" />
+            </div>
+        </form>
+        <div data-bind="ifnot: editMode" class="comment-content">
+            <span class="author" data-bind="text: commentAuthor"></span>
+            <p data-bind="text: commentContent"></p>
+            <div data-bind="if: $parent.loginVM.userId() == commentAuthorId">
+                <button data-bind="click: $parent.editComment" class="btn">Edit comment</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+    </div>
+</div>

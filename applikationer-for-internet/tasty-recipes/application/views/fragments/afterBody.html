@@ -1,0 +1,29 @@
+</div>
+   <div class="modal fade">
+   <div class="modal-dialog">
+       <form class="modal-content login" action="<?=site_url(['user', 'login'])?>" method="post">
+           <input type="hidden" value="<?=current_url()?>" name="returnTo" />
+           <div class="modal-header">
+               <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+               <h4 class="modal-title">Please enter your username and password to log in</h4>
+           </div>
+           <div class="modal-body">
+               <div class="form-group">
+                   <label>Username</label>
+                   <input data-bind="textInput: loginUsername" class="form-control" type="text" name="username">
+               </div>
+               <div class="form-group">
+                   <label>Password</label>
+                   <input data-bind="textInput: loginPassword" class="form-control" type="password" name="password">
+               </div>
+               <p><span style="color: red;" data-bind="text: loginError"></span></p>
+           </div>
+           <div class="modal-footer">
+               <button data-bind="click: cancelLogin" type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
+               <input data-bind="click: login, textInput: loginButtonText" type="button" value="Log in" class="btn btn-success">
+           </div>
+       </form>
+   </div>
+</div>
+</body>
+</html>

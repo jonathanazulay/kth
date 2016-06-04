@@ -1,0 +1,81 @@
+.recipe {
+    h2 {
+        text-align: center;
+        background: #DDE0CE;
+        margin: 0 -30px;
+        padding: 15px;
+    }
+    img {
+        width: 100%;
+    }
+}
+
+table.ingredients {
+    width: 100%;
+    background: rgb(244, 244, 244);
+    td {
+        border: 0;
+        border-bottom: 1px;
+        border-style: dashed;
+        border-color: rgb(226, 226, 226);
+        padding: 10px;
+    }
+    td.amount {
+        border-right: 1px;
+        border-style: dashed;
+        border-color: rgb(226, 226, 226);
+    }
+
+    td.ingredient {
+        text-align: right;
+    }
+}
+
+.picture-section {
+    /* Permalink - use to edit and share this gradient: http://colorzilla.com/gradient-editor/#fcfff4+0,dfe5d7+40,dde0ce+100 */
+    background: rgb(252,255,244); /* Old browsers */
+    background: -moz-linear-gradient(top,  rgba(252,255,244,1) 0%, rgba(223,229,215,1) 40%, rgba(221,224,206,1) 100%); /* FF3.6+ */
+    background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,rgba(252,255,244,1)), color-stop(40%,rgba(223,229,215,1)), color-stop(100%,rgba(221,224,206,1))); /* Chrome,Safari4+ */
+    background: -webkit-linear-gradient(top,  rgba(252,255,244,1) 0%,rgba(223,229,215,1) 40%,rgba(221,224,206,1) 100%); /* Chrome10+,Safari5.1+ */
+    background: -o-linear-gradient(top,  rgba(252,255,244,1) 0%,rgba(223,229,215,1) 40%,rgba(221,224,206,1) 100%); /* Opera 11.10+ */
+    background: -ms-linear-gradient(top,  rgba(252,255,244,1) 0%,rgba(223,229,215,1) 40%,rgba(221,224,206,1) 100%); /* IE10+ */
+    background: linear-gradient(to bottom,  rgba(252,255,244,1) 0%,rgba(223,229,215,1) 40%,rgba(221,224,206,1) 100%); /* W3C */
+    filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#fcfff4', endColorstr='#dde0ce',GradientType=0 ); /* IE6-9 */
+
+    border-bottom: 1px;
+    border-bottom-style: solid;
+    border-bottom-color: #847D51;
+    padding: 20px 10px;
+    margin: 0 -30px;
+}
+
+.instruction-section {
+    margin-top: 20px;
+
+}
+
+.enter-comment {
+    width: 100%;
+}
+
+.comment-section {
+    
+    .comment-content {
+
+    }
+
+    margin-top: 20px;
+
+    .comment {
+        background: white;
+        padding: 10px;
+    }
+
+    .comment .author {
+        font-weight: bold;
+    }
+
+    .comment.odd {
+        background: #f2f2f2;
+    }
+}

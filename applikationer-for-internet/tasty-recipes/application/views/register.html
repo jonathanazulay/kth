@@ -1,0 +1,27 @@
+<form action="<?=site_url(['register', 'register'])?>" method="post" class="container-fluid">
+    <h2>Create an account</h2>
+    <?php if (isset($error)): ?>
+    <p class="error"><?=$error?></p>
+    <?php endif; ?>
+    <div class="row">
+        <div class="form-group col-sm-6">
+            <label for="nicknameInput">Nickname</label>
+            <input type="text" name="nickname" class="form-control" id="nicknameInput" placeholder="Nickname">
+        </div>
+        <div class="form-group col-sm-6">
+            <label for="usernameInput">Username</label>
+            <input type="text" name="username" class="form-control" id="usernameInput" placeholder="Username">
+        </div>
+    </div>
+    <div class="row">
+        <div class="form-group col-sm-6">
+            <label for="passwordInput">Password</label>
+            <input type="password" name="password" class="form-control" id="passwordInput" placeholder="Password">
+        </div>
+        <div class="form-group col-sm-6">
+            <label for="repeatPasswordInput">Repeat password</label>
+            <input type="password" name="repeatPassword" class="form-control" id="repeatPasswordInput" placeholder="Repeat password">
+        </div>
+    </div>
+    <button type="submit" class="form-control btn btn-primary">Create account</button>
+</form>

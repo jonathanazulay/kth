@@ -1,0 +1,46 @@
+<!doctype html>
+<html lang="">
+<head>
+    <meta charset="utf-8">
+    <title>Tasty Recipes</title>
+    <meta name="description" content="">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1.0, user-scalable=0">
+
+    <link rel="stylesheet" href="<?=base_url()?>static/stylesheets/main.css" />
+    <link rel="stylesheet" href="<?=base_url()?>static/stylesheets/vendor.css" />
+
+    <script src="<?=base_url()?>static/bower_components/jquery/dist/jquery.min.js"></script>
+    <script src="http://ajax.aspnetcdn.com/ajax/knockout/knockout-3.3.0.js"></script>
+    <script src="<?=base_url()?>static/bower_components/bootstrap-sass/assets/javascripts/bootstrap.min.js"></script>
+    <script src="<?=base_url()?>static/scripts/LoginBarViewModel.js"></script>
+    <script src="<?=base_url()?>static/scripts/CommentViewModel.js"></script>
+    <script src="<?=base_url()?>static/scripts/main.js"></script>
+
+</head>
+<body>
+    <!--[if lt IE 10]>
+    <p class="browsehappy">You are using an <strong>outdated</strong> browser. Please <a href="http://browsehappy.com/">upgrade your browser</a> to improve your experience.</p>
+    <![endif]-->
+
+    <section class="login-bar">
+        <div data-bind="if: isLoggedIn">
+            You are logged in as <span data-bind="text: username"></span> | <a data-bind="click: logout" href="<?=site_url(['user', 'logout'])?>">Log out</a>
+        </div>
+        <div data-bind="ifnot: isLoggedIn">
+            <a href="#" data-bind="click: showLoginPopup">Log in</a> |
+            <a href="<?=site_url(['register'])?>">Register</a>
+        </div>
+    </section>
+
+    <header class="container-fluid">
+        <div class="row">
+            <a class="col-md-4 col-md-offset-4 col-sm-6 col-sm-offset-3" href="<?=base_url()?>"><img src="<?=base_url()?>static/images/logo.png" alt="Tasty Recipes"></a>
+        </div>
+    </header>
+
+    <div class="main">
+        <nav>
+            <a <?=($currentPage == 'start') ? 'class="active"' : ''?> href="<?=base_url()?>index.php">Start</a>
+            <a <?=($currentPage == 'recipe') ? 'class="active"' : ''?> href="<?=base_url()?>index.php/recipe">Recipes</a>
+            <a <?=($currentPage == 'calendar') ? 'class="active"' : ''?> href="<?=base_url()?>index.php/calendar">Food calendar</a>
+        </nav>
