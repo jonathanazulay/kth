@@ -105,7 +105,8 @@ public class DBJDBCM
         markeparam = in.nextLine();
 
         // Set the SQL statement into the query variable
-        query = "SELECT regnr, marke, farg FROM bil WHERE agare IN (SELECT id FROM person WHERE stad = ?)";
+        //alternative with subquery: query = "SELECT regnr, marke, farg FROM bil WHERE agare IN (SELECT id FROM person WHERE stad = ?)";
+        query = "SELECT regnr, marke, farg FROM bil, person WHERE agare = id AND stad = ?";
 
         // Create a statement associated to the connection and the query.
         // The new statement is placed in the variable stmt.
